@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">詰碁の森</string>
+    <string name="app_title">詰碁の森</string>
+    <string name="sgf_reader">SGFリーダー</string>
+    <string name="easy">初級</string>
+    <string name="normal">中級</string>
+    <string name="hard">上級</string>
+    <string name="very_hard">超上級</string>
+    <string name="first_b">黒先</string>
+    <string name="first_w">白先</string>
+    <string name="yes1">はい</string>
+    <string name="yes2">そうです</string>
+</resources>
