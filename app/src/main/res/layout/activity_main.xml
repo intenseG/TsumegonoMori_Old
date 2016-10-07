@@ -29,30 +29,38 @@
             android:layout_width="140dp"
             android:layout_height="60dp"
             android:id="@+id/easy"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_easy"/>
 
         <Button
             android:layout_width="140dp"
             android:layout_height="60dp"
             android:id="@+id/normal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_normal"/>
 
         <Button
             android:layout_width="140dp"
             android:layout_height="60dp"
             android:id="@+id/hard"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_hard"/>
 
-        <Button
-            android:layout_width="140dp"
-            android:layout_height="60dp"
-            android:id="@+id/very_hard"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_veryhard"/>
-
     </LinearLayout>
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/plus"/>
 
 </LinearLayout>
