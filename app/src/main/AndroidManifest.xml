@@ -19,11 +19,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LevelEasy"
-            android:label="@string/easy"
+            android:name=".LevelNormal"
+            android:label="@string/normal"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".SgfReader"/>
+            android:name=".JsonReader"/>
     </application>
 
 </manifest>

@@ -14,14 +14,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class SgfReader extends AppCompatActivity {
+import static com.example.oubeika.tsumegonomori.GameConst.TAG;
 
-    final static String TAG = "LOGVIEW";
+public class JsonReader extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sgf_reader);
 
         // ファイルの読み込み
         InputStream is;
@@ -40,14 +39,14 @@ public class SgfReader extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject(json);
 
             // 問題データ追加
-            SgfData data = new SgfData();
+            ZahyoChanger changer = new ZahyoChanger();
             JSONObject problems = jsonObject.getJSONObject("problems");
             //JSONArray easy = problems.getJSONArray("easy");
             JSONArray normal = problems.getJSONArray("normal");
             for(int i = 0; i < normal.length(); i++) {
                 String value1 = normal.getString(i);
-                data.setProblems(value1);
-                Log.d("debug", "バリューは " + value1 + " です!");
+                changer.GoDataSeparate(value1);
+                Log.d(TAG, "バリューは " + value1 + " です!");
             }
             //答えデータ追加
             JSONObject answers = jsonObject.getJSONObject("answers");
@@ -55,8 +54,8 @@ public class SgfReader extends AppCompatActivity {
             JSONArray normal_answers = answers.getJSONArray("normal");
             for(int j = 0; j < normal_answers.length(); j++) {
                 String value2 = normal_answers.getString(j);
-                data.setAnswers(value2);
-                Log.d("debug", "バリューは " + value2 + " です!");
+                changer.GoDataSeparate(value2);
+                Log.d(TAG, "バリューは " + value2 + " です!");
             }
 
         } catch (FileNotFoundException e) {

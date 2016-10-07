@@ -1,12 +1,8 @@
 package com.example.oubeika.tsumegonomori;
 
-import java.io.Serializable;
+class GameConst {
 
-public class GameConst {
-
-    public static final String ProblemsPATH = "problems"; // Firebaseに質問を保存するバス
-    public static final String AnswersPATH = "answers"; // Firebaseに解答を保存するパス
-
+    public final static String TAG = "LOGVIEW";
     public static final int SIZE = 15;
     public static final int LAST_MARK = 5;
     public static final int EMPTY = 0;
