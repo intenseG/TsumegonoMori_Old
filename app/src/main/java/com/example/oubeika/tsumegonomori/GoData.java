@@ -2,7 +2,10 @@ package com.example.oubeika.tsumegonomori;
 
 import java.io.Serializable;
 
-public class GoData implements Serializable{
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class GoData extends RealmObject implements Serializable{
 
     private String colP;
     private String rowP;
@@ -11,9 +14,8 @@ public class GoData implements Serializable{
     private String rowA;
     private int stoneColorA;
 
-    public GoData(){
-
-    }
+    @PrimaryKey
+    private int id;
 
     public String getColP() {
         return colP;
@@ -61,5 +63,13 @@ public class GoData implements Serializable{
 
     public void setStoneColorA(int stoneColorA) {
         this.stoneColorA = stoneColorA;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

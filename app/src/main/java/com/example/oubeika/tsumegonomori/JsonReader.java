@@ -22,6 +22,8 @@ public class JsonReader extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        GoData goData = new GoData();
+
         // ファイルの読み込み
         InputStream is;
         BufferedReader br;
