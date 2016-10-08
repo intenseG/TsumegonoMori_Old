@@ -30,9 +30,6 @@
         <activity
             android:name=".Problem"
             android:label="@string/normal"/>
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.oubeika.tsumegonomori.ProblemList"/>
 
     </application>
 

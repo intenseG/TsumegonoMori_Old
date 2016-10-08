@@ -14,6 +14,10 @@ public class GoData extends RealmObject implements Serializable{
     private String rowA;
     private int stoneColorA;
 
+    GoData(){
+
+    }
+
     @PrimaryKey
     private int id;
 

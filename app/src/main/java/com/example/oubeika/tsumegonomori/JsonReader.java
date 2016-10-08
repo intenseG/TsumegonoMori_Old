@@ -22,8 +22,6 @@ public class JsonReader extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        GoData goData = new GoData(); //このインスタンスの使い方がわからない
-
         // ファイルの読み込み
         InputStream is;
         BufferedReader br;
@@ -68,6 +66,8 @@ public class JsonReader extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    GoData goData = new GoData();
+    Relay relay = new Relay(goData);
 }
 
 //問題データを格納
