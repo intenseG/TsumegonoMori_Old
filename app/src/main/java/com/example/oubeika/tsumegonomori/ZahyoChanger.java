@@ -1,46 +1,55 @@
 package com.example.oubeika.tsumegonomori;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import static com.example.oubeika.tsumegonomori.GameConst.BLACK;
-import static com.example.oubeika.tsumegonomori.GameConst.TAG;
 import static com.example.oubeika.tsumegonomori.GameConst.WHITE;
+import static com.example.oubeika.tsumegonomori.GameConst.TAG;
 
-public class ZahyoChanger {
+class ZahyoChanger extends AppCompatActivity {
 
-    private int colP;
-    private int rowP;
-    private int stoneColorP;
-    private int colA;
-    private int rowA;
-    private int stoneColorA;
+    private GoData goData = new GoData();
 
-    GoData data = new GoData();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     private void ProblemStone(String problems, int stoneColor) {
 
-        this.colP = intChanger(problems.charAt(0));
-        this.rowP = intChanger(problems.charAt(1));
-        this.stoneColorP = stoneColor;
+        int colP = intChanger(problems.charAt(0));
+        int rowP = intChanger(problems.charAt(1));
 
-        data.setColP(String.valueOf(colP));
-        data.setRowP(String.valueOf(rowP));
-        data.setStoneColorP(stoneColorP);
+        Log.d(TAG, String.valueOf(colP));
+        Log.d(TAG, String.valueOf(rowP));
+        Log.d(TAG, String.valueOf(stoneColor));
+
+        goData.setColP(colP);
+        goData.setRowP(rowP);
+        goData.setStoneColorP(stoneColor);
     }
 
     private void AnswerMove(String answers, int stoneColor) {
 
-        this.colA = intChanger(answers.charAt(0));
-        this.rowA = intChanger(answers.charAt(1));
-        this.stoneColorA = stoneColor;
+        int colA = intChanger(answers.charAt(0));
+        int rowA = intChanger(answers.charAt(1));
 
-        data.setColA(String.valueOf(colA));
-        data.setRowA(String.valueOf(rowA));
-        data.setStoneColorA(stoneColorA);
+        Log.d(TAG, String.valueOf(colA));
+        Log.d(TAG, String.valueOf(rowA));
+        Log.d(TAG, String.valueOf(stoneColor));
+
+        goData.setColA(colA);
+        goData.setRowA(rowA);
+        goData.setStoneColorA(stoneColor);
     }
 
     //ここでsを受け取って不要な文字を除去する
     public void GoDataSeparate(String goData) {
+
+        GoData mGoData = new GoData();
 
         int start;
         int end;
@@ -53,11 +62,11 @@ public class ZahyoChanger {
                 stoneColor = BLACK;
                 start = data.indexOf("AB::");
                 if (start != -1) {
-                    end = data.indexOf("@", start);
+                    end = data.indexOf("@", start + 1);
                     if (end != -1) {
                         String stone = data.substring(start, end);   //黒の初期配置座標の文字列を取得
-                        String spritZahyo[] = (stone.split(":", 0));    //":"で区切ってString型配列に要素を入れる
-                        for (String zahyo : spritZahyo) {   //座標を1つずつ読み込むループ文
+                        String splitZahyo[] = (stone.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                        for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                             Log.d(TAG, zahyo);
                             ProblemStone(zahyo, stoneColor);
                         }
@@ -68,38 +77,73 @@ public class ZahyoChanger {
                 stoneColor = WHITE;
                 start = data.indexOf("AW::");       //AWの位置を取得
                 if (start != -1) {
-                    end = data.indexOf("@", start);     //セミコロンの位置を取得
+                    end = data.indexOf("@", start + 1);     //セミコロンの位置を取得
                     if (end != -1) {
                         String stone = data.substring(start, end);   //セミコロン間の文字列を取得
-                        String[] spritZahyo = (stone.split(":", 0));    //":"で区切ってString型配列に要素を入れる
-                        for (String zahyo : spritZahyo) {   //座標を1つずつ読み込むループ文
+                        String[] splitZahyo = (stone.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                        for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                             Log.d(TAG, zahyo);
                             ProblemStone(zahyo, stoneColor);
                         }
                     }
                 }
-            } else if (data.startsWith("B;;")) {
+            } else if (data.startsWith("B;")) {
 
                 stoneColor = BLACK;
-                start = data.indexOf("B;;");
+                start = data.indexOf("B;");
                 if (start != -1) {
-                    end = data.indexOf("@", start);
+                    end = data.indexOf("@", start + 1);
                     if (end != -1) {
                         String zahyo = data.substring(start, end);   //黒の初期配置座標の文字列を取得
                         Log.d(TAG, zahyo);
                         AnswerMove(zahyo, stoneColor);
                     }
                 }
-            } else if (data.startsWith("W;;")) {
+            } else if (data.startsWith("W;")) {
 
                 stoneColor = WHITE;
-                start = data.indexOf("W;;");
+                start = data.indexOf("W;");
                 if (start != -1) {
-                    end = data.indexOf("@", start);
+                    end = data.indexOf("@", start + 1);
                     if (end != -1) {
-                        String zahyo = data.substring(start, end);   //黒の初期配置座標の文字列を取得
+                        String zahyo = data.substring(start, end);   //白の初期配置座標の文字列を取得
                         Log.d(TAG, zahyo);
                         AnswerMove(zahyo, stoneColor);
+                    }
+                }
+            } else if (data.startsWith("QN::")) {
+
+                start = data.indexOf("QN::");
+                if (start != -1) {
+                    end = data.indexOf("@", start + 1);
+                    if (end != -1) {
+                        String qNum = data.substring(start, end);
+                        //後で数値をQ1などの形式に変換する
+                        Log.d(TAG, qNum);
+                        mGoData.setQNum(qNum);
+                    }
+                }
+            } else if (data.startsWith("TU::")) {
+
+                start = data.indexOf("TU::");
+                if (start != -1) {
+                    end = data.indexOf("@", start + 1);
+                    if (end != -1) {
+                        String teban = data.substring(start, end);
+                        //後で手番情報を日本語に変換する
+                        Log.d(TAG, teban);
+                        mGoData.setTeban(teban);
+                    }
+                }
+            } else if (data.startsWith("LV::")) {
+                start = data.indexOf("LV::");
+                if (start != -1) {
+                    end = data.indexOf("@", start + 1);
+                    if (end != -1) {
+                        String level = data.substring(start, end);
+                        //後で数値を○級、○段のように変換する
+                        Log.d(TAG, level);
+                        mGoData.setLevel(level);
                     }
                 }
             }

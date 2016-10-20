@@ -1,57 +1,68 @@
 package com.example.oubeika.tsumegonomori;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
-public class GoDataAdapter extends BaseAdapter {
+public class GoDataAdapter extends ArrayAdapter<GoData> {
 
     private LayoutInflater mLayoutInflater;
-    private ArrayList<GoData> mGoDataArrayList;
+    private List<GoData> goData = null;
 
     public GoDataAdapter(Context context){
+        super(context, 0);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setmTaskArrayList(ArrayList<GoData> goDataArrayList){
-        mGoDataArrayList = goDataArrayList;
+    public void setGoData(List<GoData> details) {
+        this.goData = details;
     }
 
     @Override
     public int getCount() {
-        return mGoDataArrayList.size();
+        if (goData == null) {
+            return 0;
+        }
+        return goData.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return mGoDataArrayList.get(position);
+    public GoData getItem(int position) {
+        if (goData == null || goData.get(position) == null) {
+            return null;
+        }
+        return goData.get(position);
     }
 
     @Override
-    public long getItemId(int position) {
-        return mGoDataArrayList.get(position).getId();
+    public long getItemId(int i) {
+        return i;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
         if (convertView == null){
-            convertView = mLayoutInflater.inflate(android.R.layout.simple_list_item_2, null);
+            convertView = mLayoutInflater.inflate(R.layout.list_item, null);
         }
 
-        TextView textView1 = (TextView) convertView.findViewById(android.R.id.text1);
-        TextView textView2 = (TextView) convertView.findViewById(android.R.id.text2);
+        GoData data = goData.get(position);
 
-        textView1.setText(mGoDataArrayList.get(position).getColP());
-        textView2.setText(mGoDataArrayList.get(position).getRowP());
+        if(data != null) {
+            TextView q_num_level = (TextView) convertView.findViewById(R.id.q_num);
+            TextView level = (TextView) convertView.findViewById(R.id.q_level);
+
+            q_num_level.setText(goData.get(position).getQNum());
+            level.setText(goData.get(position).getLevel());
+        }
 
         return convertView;
     }

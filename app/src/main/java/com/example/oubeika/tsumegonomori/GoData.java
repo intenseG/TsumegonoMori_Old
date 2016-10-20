@@ -5,35 +5,58 @@ import java.io.Serializable;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class GoData extends RealmObject implements Serializable{
+public class GoData extends RealmObject implements Serializable {
 
-    private String colP;
-    private String rowP;
+    private String qNum;
+    private String teban;
+    private String level;
+    private int colP;
+    private int rowP;
     private int stoneColorP;
-    private String colA;
-    private String rowA;
+    private int colA;
+    private int rowA;
     private int stoneColorA;
-
-    GoData(){
-
-    }
 
     @PrimaryKey
     private int id;
 
-    public String getColP() {
+    public String getQNum() {
+        return qNum;
+    }
+
+    public void setQNum(String qNum) {
+        this.qNum = qNum;
+    }
+
+    public String getTeban() {
+        return teban;
+    }
+
+    public void setTeban(String teban) {
+        this.teban = teban;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public int getColP() {
         return colP;
     }
 
-    public void setColP(String colP) {
+    public void setColP(int colP) {
         this.colP = colP;
     }
 
-    public String getRowP() {
+    public int getRowP() {
         return rowP;
     }
 
-    public void setRowP(String rowP) {
+    public void setRowP(int rowP) {
         this.rowP = rowP;
     }
 
@@ -45,19 +68,19 @@ public class GoData extends RealmObject implements Serializable{
         this.stoneColorP = stoneColorP;
     }
 
-    public String getColA() {
+    public int getColA() {
         return colA;
     }
 
-    public void setColA(String colA) {
+    public void setColA(int colA) {
         this.colA = colA;
     }
 
-    public String getRowA() {
+    public int getRowA() {
         return rowA;
     }
 
-    public void setRowA(String rowA) {
+    public void setRowA(int rowA) {
         this.rowA = rowA;
     }
 

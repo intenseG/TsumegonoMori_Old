@@ -2,42 +2,38 @@ package com.example.oubeika.tsumegonomori;
 
 import android.support.v7.app.AppCompatActivity;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 public class Goban extends AppCompatActivity{
 
-    private static final int LINE = 13;
-    private static final int ALLBOARDLINE = LINE * LINE;
+    private static final int LINE = 15;
+   // private static final int ALLBOARDLINE = LINE * LINE;
     private int[][] board = new int[LINE][LINE];
+/*
     private int bhama;
     private int whama;
+*/
 
-
-    private int lastTurn;
-    private int dame;
+    private int row;
+    private int col;
+    //private int lastTurn;
+/*    private int dame;
     private int[][] agehamaPT;
     private int nxtR;
     private int nxtC;
     private int ixAG;        //アゲハマ着点テーブル用インデックス初期化
-    private int ixAGMax;     //アゲハマ着点テーブルデータ数最大値初期化
-    private int row;
-    private int col;
+    private int ixAGMax;     //アゲハマ着点テーブルデータ数最大値初期化*/
 
     Goban() {
         initializeBan();
-        bhama = 0;
+/*        bhama = 0;
         whama = 0;
-        agehamaPT = new int[ALLBOARDLINE][2];
+        agehamaPT = new int[ALLBOARDLINE][2];*/
     }
 
     public void initialize() {
         initializeBan();
-        bhama = 0;
+/*        bhama = 0;
         whama = 0;
-        agehamaPT = new int[ALLBOARDLINE][2];
+        agehamaPT = new int[ALLBOARDLINE][2];*/
     }
 
     private void initializeBan() {
@@ -48,14 +44,14 @@ public class Goban extends AppCompatActivity{
         }
     }
 
-    public void update(int inStoneColor, int inRow, int inCol) {
+    public void update(int stoneColor, int row, int col) {
 
-        lastTurn = inStoneColor;
-        returnValue();
-        if (board[inRow][inCol] == 0) {
-            board[inRow][inCol] = inStoneColor;
+        //lastTurn = stoneColor;
+       // returnValue();
+        if (board[row][col] == 0) {
+            board[row][col] = stoneColor;
         }
-        translateValue(inStoneColor, inRow, inCol);
+       // translateValue(col, row, stoneColor);
     }
 
     private void returnValue() {
@@ -67,11 +63,19 @@ public class Goban extends AppCompatActivity{
             }
         }
     }
-    private void translateValue(int inColor,int inRow,int inCol){
-        board[inRow][inCol]=inColor + 10;
+    private void translateValue(int col, int row, int color){
+        board[row][col] = color + 10;
     }
 
-    private void procAgehama(){           //盤上に配置された石すべてについて
+    public int[][] getBoard(){
+        return board;
+    }
+
+    public void setBoard(int[][] board){
+        this.board = board;
+    }
+
+   /* private void procAgehama(){           //盤上に配置された石すべてについて
         for(row=0;row<LINE;row++){
             for(col=0;col<LINE;col++){
                 if(board[row][col]!=0 & board[row][col]!=lastTurn){
@@ -85,6 +89,7 @@ public class Goban extends AppCompatActivity{
         countDame();
         removeAgehama();
     }
+
 
     private void countDame(){
         //アゲハマ着点テーブル初期化
@@ -160,13 +165,9 @@ public class Goban extends AppCompatActivity{
                 board[agehamaPT[ixAG][0]][agehamaPT[ixAG][1]]=0;
             }
         }
-    }
+    }*/
 
-    public int[][] getBoard(){
-        return board;
-    }
-
-    public void SgfRead() {
+/*    public void SgfRead() {
 
         InputStream is = null;
         BufferedReader br = null;
@@ -271,5 +272,5 @@ public class Goban extends AppCompatActivity{
                 break;
         }
         return i;
-    }
+    }*/
 }

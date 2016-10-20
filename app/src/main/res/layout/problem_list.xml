@@ -6,12 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.oubeika.tsumegonomori.MainActivity">
+    tools:context="com.example.oubeika.tsumegonomori.ProblemList">
 
     <ListView
+        android:id="@+id/listView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview1">
-    </ListView>
+        android:layout_height="wrap_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

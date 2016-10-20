@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".RealmConfig"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,13 +24,18 @@
         </activity>
         <activity
             android:name=".ProblemList"
-            android:label="@string/normal"/>
+            android:label="@string/normal"
+            android:parentActivityName=".MainActivity"/>
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.oubeika.tsumegonomori.MainActivity"/>
+            android:value="com.example.oubeika.tsumegonomori.ProblemList"/>
         <activity
             android:name=".Problem"
-            android:label="@string/normal"/>
+            android:label="@string/normal"
+            android:parentActivityName=".ProblemList"/>
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.oubeika.tsumegonomori.ProblemList"/>
 
     </application>
 
