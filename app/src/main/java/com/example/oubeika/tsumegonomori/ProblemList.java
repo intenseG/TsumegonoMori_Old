@@ -22,6 +22,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
+import io.realm.RealmList;
 import io.realm.RealmResults;
 
 import static com.example.oubeika.tsumegonomori.GameConst.TAG;
@@ -54,9 +55,8 @@ public class ProblemList extends AppCompatActivity {
         mRealm.addChangeListener(mRealmListener);
         mGoDataRealmResults = mRealm.where(GoData.class).findAll();
 
-
         //ListViewの設定
-        mGoDataAdapter = new GoDataAdapter(ProblemList.this);
+        mGoDataAdapter = new GoDataAdapter(this);
         mListView = (ListView) findViewById(R.id.listView1);
 
         //ListViewをタップしたときの処理
@@ -72,24 +72,25 @@ public class ProblemList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        addGoData();
-
-        reloadListView();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        if (mGoDataAdapter != null) {
-            List<GoData> data = null;
+        if (mGoDataAdapter == null) {
+            List<GoData> dataList = null;
             try {
-                data = loadGoData();
+                dataList = loadGoData(); //ここでdata : size = 0になる
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             mGoDataAdapter = new GoDataAdapter(this);
-            mGoDataAdapter.setGoData(data);
+            mGoDataAdapter.setGoData(dataList);
+
+            //ListViewに表示
+            mListView.setAdapter(mGoDataAdapter);
             mGoDataAdapter.notifyDataSetChanged();
         }
         addGoData();
@@ -135,12 +136,11 @@ public class ProblemList extends AppCompatActivity {
         BufferedReader br;
         String json = "";
 
-        // ファイルの読み込み
-        InputStream is = this.getAssets().open("sgfdata.json");
+        InputStream is = getAssets().open("sgfdata.json");
 
+        mRealm.beginTransaction();
         try {
-            //is = this.getAssets().open("sgfdata.json");
-            //mRealm.createAllFromJson(GoData.class, is);
+            // ファイルの読み込み
             br = new BufferedReader((new InputStreamReader(is)));
             String s;
             while ((s = br.readLine()) != null) {
@@ -166,26 +166,17 @@ public class ProblemList extends AppCompatActivity {
                 String value2 = normal_answers.getString(j);
                 changer.GoDataSeparate(value2);
                 Log.d(TAG, "value2は " + value2 + " です!");
+                mRealm.createAllFromJson(GoData.class, is);
+                mRealm.commitTransaction();
             }
-
         } catch (IOException | JSONException e) {
-            e.printStackTrace();
+            mRealm.cancelTransaction();
         } finally {
             if (is != null) {
                 is.close();
             }
         }
     }
-
-/*
-    // if(mGoDataRealmResults.size() != 0){
-
-    addGoData();
-    // }
-
-    reloadListView();
-}
-*/
 
 /*    private void loadJsonFromJsonObject() {
         Map<String, String> data = new HashMap<>();
@@ -221,8 +212,8 @@ public class ProblemList extends AppCompatActivity {
 
             GoData data = new GoData();
 
-            data.setQNum(mGoDataRealmResults.get(i).getQNum());
-            data.setLevel(mGoDataRealmResults.get(i).getLevel());
+            data.setQNum(data.getQNum());
+            data.setLevel(data.getLevel());
 
             goDataArrayList.add(data);
         }
@@ -234,8 +225,38 @@ public class ProblemList extends AppCompatActivity {
 
     private void addGoData() {
 
-        for (int j = 0; j < mGoDataRealmResults.size(); j++) {
-            Log.d(TAG, String.valueOf(mGoDataRealmResults.size()));
+        if(mGoDataRealmResults.size() > 0){
+
+            mRealm.beginTransaction();
+
+/*        for (int j = 0; j < mGoDataRealmResults.size(); j++) {
+
+            data.setQNum(mGoDataRealmResults.get(j).getQNum());
+            data.setTeban(mGoDataRealmResults.get(j).getTeban());
+            data.setLevel(mGoDataRealmResults.get(j).getLevel());
+
+            data.setColP(mGoDataRealmResults.get(j).getColP());
+            data.setRowP(mGoDataRealmResults.get(j).getRowP());
+            data.setStoneColorP(mGoDataRealmResults.get(j).getStoneColorP());
+            data.setColA(mGoDataRealmResults.get(j).getColA());
+            data.setRowA(mGoDataRealmResults.get(j).getRowA());
+            data.setStoneColorA(mGoDataRealmResults.get(j).getStoneColorA());*/
+
+            //final GoData mGoData = mRealm.copyToRealm(mData);
+            //GoData data = mRealm.createObject(GoData.class);
+            GoData data = new GoData();
+            data.setColP(16);
+            data.setRowP(4);
+            data.setStoneColorP(1);
+
+            data.setQNum("1");
+            data.setTeban("b");
+            data.setLevel("-5");
+
+            mRealm.copyToRealmOrUpdate(data);
+            mRealm.commitTransaction();
+        }
+       /* for (int j = 0; j < mGoDataRealmResults.size(); j++) {
             GoData data = new GoData();
 
             data.setQNum(mGoDataRealmResults.get(j).getQNum());
@@ -254,6 +275,6 @@ public class ProblemList extends AppCompatActivity {
             mRealm.commitTransaction();
 
             mRealm.close();
-        }
+        }*/
     }
 }

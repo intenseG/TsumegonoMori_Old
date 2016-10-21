@@ -62,15 +62,15 @@ class ZahyoChanger extends AppCompatActivity {
                 stoneColor = BLACK;
                 start = data.indexOf("AB::");
                 if (start != -1) {
-                    end = data.indexOf("@", start + 1);
-                    if (end != -1) {
-                        String stone = data.substring(start, end);   //黒の初期配置座標の文字列を取得
-                        String splitZahyo[] = (stone.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                        for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
-                            Log.d(TAG, zahyo);
-                            ProblemStone(zahyo, stoneColor);
-                        }
+    /*                end = data.indexOf("@", start + 1);
+                    if (end != -1) {*/
+                    String allZahyo = data.substring(start + 4);   //黒の初期配置座標の文字列を取得
+                    String splitZahyo[] = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                    for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
+                        Log.d(TAG, zahyo);
+                        ProblemStone(zahyo, stoneColor);
                     }
+                    //}
                 }
             } else if (data.startsWith("AW::")) {           //ここで白かどうかを判定
 
@@ -92,9 +92,11 @@ class ZahyoChanger extends AppCompatActivity {
                 stoneColor = BLACK;
                 start = data.indexOf("B;");
                 if (start != -1) {
-                    end = data.indexOf("@", start + 1);
-                    if (end != -1) {
-                        String zahyo = data.substring(start, end);   //黒の初期配置座標の文字列を取得
+ /*                   end = data.indexOf("@", start + 1);
+                    if (end != -1) {*/
+                    String allZahyo = data.substring(start + 2);   //黒の初期配置座標の文字列を取得
+                    String[] splitZahyo = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                    for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                         Log.d(TAG, zahyo);
                         AnswerMove(zahyo, stoneColor);
                     }
@@ -115,36 +117,35 @@ class ZahyoChanger extends AppCompatActivity {
 
                 start = data.indexOf("QN::");
                 if (start != -1) {
-                    end = data.indexOf("@", start + 1);
-                    if (end != -1) {
-                        String qNum = data.substring(start, end);
-                        //後で数値をQ1などの形式に変換する
-                        Log.d(TAG, qNum);
-                        mGoData.setQNum(qNum);
-                    }
+    /*                end = data.indexOf("@", start + 1);
+                    if (end != -1) {*/
+                    String qNum = data.substring(start + 4);
+                    //後で数値をQ1などの形式に変換する
+                    Log.d(TAG, qNum);
+                    mGoData.setQNum(qNum);
+                    //}
                 }
             } else if (data.startsWith("TU::")) {
 
                 start = data.indexOf("TU::");
                 if (start != -1) {
-                    end = data.indexOf("@", start + 1);
-                    if (end != -1) {
-                        String teban = data.substring(start, end);
-                        //後で手番情報を日本語に変換する
-                        Log.d(TAG, teban);
-                        mGoData.setTeban(teban);
-                    }
+                    /*end = data.indexOf("@", start + 1);
+                    if (end != -1) {*/
+                    String teban = data.substring(start + 4);
+                    //後で手番情報を日本語に変換する
+                    Log.d(TAG, teban);
+                    mGoData.setTeban(teban);
+                    //}
                 }
             } else if (data.startsWith("LV::")) {
                 start = data.indexOf("LV::");
                 if (start != -1) {
-                    end = data.indexOf("@", start + 1);
-                    if (end != -1) {
-                        String level = data.substring(start, end);
-                        //後で数値を○級、○段のように変換する
-                        Log.d(TAG, level);
-                        mGoData.setLevel(level);
-                    }
+                   /* end = data.indexOf("@", start + 1);
+                    if (end != -1) {*/
+                    String level = data.substring(start + 4);
+                    //後で数値を○級、○段のように変換する
+                    Log.d(TAG, level);
+                    mGoData.setLevel(level);
                 }
             }
         }

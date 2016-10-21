@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 public class GoDataAdapter extends ArrayAdapter<GoData> {
 
     private LayoutInflater mLayoutInflater;
-    private List<GoData> goData = null;
+    private List<GoData> data = null;
 
     public GoDataAdapter(Context context){
         super(context, 0);
@@ -22,48 +23,59 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
     }
 
     public void setGoData(List<GoData> details) {
-        this.goData = details;
+        this.data = details;
     }
 
-    @Override
+/*    @Override
     public int getCount() {
-        if (goData == null) {
+        if (infoList == null) {
             return 0;
         }
-        return goData.size();
+        return infoList.size();
     }
 
     @Override
-    public GoData getItem(int position) {
-        if (goData == null || goData.get(position) == null) {
+    public GoDataInfo getItem(int position) {
+        if (infoList == null || infoList.get(position) == null) {
             return null;
         }
-        return goData.get(position);
+        return infoList.get(position);
     }
 
     @Override
     public long getItemId(int i) {
         return i;
-    }
+    }*/
 
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
 
+        ViewHolder holder;
+
         if (convertView == null){
-            convertView = mLayoutInflater.inflate(R.layout.list_item, null);
+            convertView = mLayoutInflater.inflate(
+                    R.layout.list_item,
+                    parent,
+                    false
+            );
+            holder = new ViewHolder();
+            holder.q_num = (TextView) convertView.findViewById(R.id.q_num);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        GoData data = goData.get(position);
+        GoData godata = getItem(position);
 
-        if(data != null) {
-            TextView q_num_level = (TextView) convertView.findViewById(R.id.q_num);
-            TextView level = (TextView) convertView.findViewById(R.id.q_level);
-
-            q_num_level.setText(goData.get(position).getQNum());
-            level.setText(goData.get(position).getLevel());
+        if (godata != null) {
+            holder.q_num.setText(godata.getQNum());
         }
 
         return convertView;
     }
+}
+
+class ViewHolder {
+    TextView q_num;
 }

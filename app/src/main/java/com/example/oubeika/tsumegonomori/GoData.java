@@ -1,12 +1,17 @@
 package com.example.oubeika.tsumegonomori;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 public class GoData extends RealmObject implements Serializable {
 
+    @PrimaryKey
+    private int id;
     private String qNum;
     private String teban;
     private String level;
@@ -16,9 +21,6 @@ public class GoData extends RealmObject implements Serializable {
     private int colA;
     private int rowA;
     private int stoneColorA;
-
-    @PrimaryKey
-    private int id;
 
     public String getQNum() {
         return qNum;
