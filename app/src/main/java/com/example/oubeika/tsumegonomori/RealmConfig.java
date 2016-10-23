@@ -10,7 +10,7 @@ public class RealmConfig extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        RealmConfiguration config = new RealmConfiguration.Builder(this).build();
+        RealmConfiguration config = new RealmConfiguration.Builder(this).schemaVersion(42).migration(new Migration()).build();
         Realm.setDefaultConfiguration(config);
     }
 }
