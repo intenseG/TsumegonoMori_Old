@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GoDataAdapter extends ArrayAdapter<GoData> {
@@ -15,8 +16,8 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
     private LayoutInflater layoutInflater;
     private List<GoData> data = null;
 
-    public GoDataAdapter(Context context){
-        super(context, 0);
+    public GoDataAdapter(Context context, int id, List<GoData> goDataList){
+        super(context, 0, goDataList);
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -24,7 +25,7 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
         this.data = details;
     }
 
-    @Override
+/*    @Override
     public int getCount() {
         return data.size();
     }
@@ -37,7 +38,7 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
     @Override
     public long getItemId(int pos) {
         return data.get(pos).getId();
-    }
+    }*/
 
     @NonNull
     @Override

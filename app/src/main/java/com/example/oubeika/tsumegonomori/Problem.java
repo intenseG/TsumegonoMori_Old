@@ -20,6 +20,7 @@ import io.realm.RealmResults;
 public class Problem extends AppCompatActivity implements View.OnClickListener{
 
     private static final int LINE = 13;
+    private Realm realm;
     private GoData goData;
     private TextView q_num, teban, level_text;
     private ImageView goban_13;
@@ -50,11 +51,20 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{
         next = (ImageButton) findViewById(R.id.button_skip_next);
         next.setOnClickListener(this);
 
-        Intent intent = getIntent();
-        goData = (GoData) intent.getSerializableExtra(ProblemList.EXTRA_GODATA);
-        }
+        realm = Realm.getDefaultInstance();
 
-       // addStone();
+        Intent intent = getIntent();
+        if (intent != null) {
+            String qNum = intent.getStringExtra("godata_q_num");
+            String level = intent.getStringExtra("godata_level");
+            String turn = intent.getStringExtra("godata_turn");
+
+            q_num.setText(qNum);
+            level_text.setText(level);
+            teban.setText(turn);
+        }
+    }
+    // addStone();
 /*        goData = new GoData();
 
         int col = goData.getColP();
@@ -81,7 +91,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{
         }*/
 
     @Override
-    public void onClick(View view) {
+    public void onClick (View view){
 
         if (view != null) {
             switch (view.getId()) {
@@ -115,7 +125,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{
         Bitmap stoneW = BitmapFactory.decodeResource(getResources(), R.drawable.stone2);
 
         Goban goban = new Goban();
-       // goban.update(colP, rowP, stoneColorP);
+        // goban.update(colP, rowP, stoneColorP);
 
         //碁盤の描画
         goban13.setDensity(DisplayMetrics.DENSITY_DEFAULT);

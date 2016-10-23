@@ -104,7 +104,7 @@ class ZahyoChanger extends AppCompatActivity {
                         AnswerMove(zahyo, stoneColor);
                     }
                 }
-            } else if (data.startsWith("QN::")) {
+            } else if (data.startsWith("QN::")) {  //ここは必要ないから後で消す
 
                 start = data.indexOf("QN::");
                 if (start != -1) {
