@@ -1,7 +1,5 @@
 package com.example.oubeika.tsumegonomori;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 
 import io.realm.RealmList;

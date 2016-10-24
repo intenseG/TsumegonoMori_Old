@@ -2,6 +2,7 @@ package com.example.oubeika.tsumegonomori;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,8 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
     private LayoutInflater layoutInflater;
     private List<GoData> data = null;
 
-    public GoDataAdapter(Context context, int id, List<GoData> goDataList){
-        super(context, 0, goDataList);
+    public GoDataAdapter(Context context){
+        super(context, 0);
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -25,20 +26,26 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
         this.data = details;
     }
 
-/*    @Override
+    @Override
     public int getCount() {
+        if (data == null) {
+            return 0;
+        }
         return data.size();
     }
 
     @Override
     public GoData getItem(int pos) {
+        if (data == null || data.get(pos) == null) {
+            return null;
+        }
         return data.get(pos);
     }
 
     @Override
-    public long getItemId(int pos) {
-        return data.get(pos).getId();
-    }*/
+    public long getItemId(int i) {
+        return i;
+    }
 
     @NonNull
     @Override
@@ -54,6 +61,7 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
 
         GoData godata = data.get(pos);
 
+        Log.d("QNUM2", String.valueOf(data.get(pos)));
         ((TextView) convertView.findViewById(R.id.q_num))
                 .setText(godata.getQNum());
         ((TextView) convertView.findViewById(R.id.level))

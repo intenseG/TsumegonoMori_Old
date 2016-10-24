@@ -8,9 +8,11 @@
     android:background="@drawable/home_background"
     tools:context="com.example.oubeika.tsumegonomori.ProblemList">
 
-    <ListView
-        android:id="@+id/listView1"
+    <GridView
+        android:id="@+id/problems_list"
+        android:listSelector="@android:color/transparent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:numColumns="3" />
 
 </LinearLayout>

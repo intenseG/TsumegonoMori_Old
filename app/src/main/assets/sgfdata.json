@@ -7,8 +7,8 @@
   },
   "problems": {
     "normal": [
-      "AB::pp;pq;np;mq;ro;po;rm;qo;mr;kr@AW::qp;oq;qq;pr;qr;nr@QN::1@TU::b@LV::-5",
-      "AB::rq;qp;ro;qo;mq;mp;np;so;op;lr;kq@AW::rp;sp;qq;rr;pq;nr;nq;mr@QN::2@TU::b@LV::-3"
+      "AB::pp;pq;np;mq;ro;po;rm;qo;mr;kr@AW::qp;oq;qq;pr;qr;nr@QN::1@TU::b@LV::5K",
+      "AB::rq;qp;ro;qo;mq;mp;np;so;op;lr;kq@AW::rp;sp;qq;rr;pq;nr;nq;mr@QN::2@TU::b@LV::3K"
     ]
   }
 }
