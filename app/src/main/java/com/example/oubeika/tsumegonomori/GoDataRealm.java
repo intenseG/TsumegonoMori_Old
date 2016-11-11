@@ -1,15 +1,49 @@
 package com.example.oubeika.tsumegonomori;
 
+import java.io.Serializable;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
-public class Zahyo extends RealmObject {
+public class GoDataRealm extends RealmObject implements Serializable {
 
+    private String qNum;
+    private String teban;
+    private String level;
     private int colP;
     private int rowP;
     private int stoneColorP;
     private int colA;
     private int rowA;
     private int stoneColorA;
+
+    @PrimaryKey
+    private int id;
+
+    public String getQNum() {
+        return qNum;
+    }
+
+    public void setQNum(String qNum) {
+        this.qNum = qNum;
+    }
+
+    public String getTeban() {
+        return teban;
+    }
+
+    public void setTeban(String teban) {
+        this.teban = teban;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public int getColP() {
         return colP;
@@ -57,5 +91,13 @@ public class Zahyo extends RealmObject {
 
     public void setStoneColorA(int stoneColorA) {
         this.stoneColorA = stoneColorA;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

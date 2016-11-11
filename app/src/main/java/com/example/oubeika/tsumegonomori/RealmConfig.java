@@ -7,12 +7,13 @@ import io.realm.RealmConfiguration;
 
 public class RealmConfig extends Application {
 
-    @Override
+/*    @Override
     public void onCreate() {
         super.onCreate();
-        RealmConfiguration config = new RealmConfiguration.Builder(this)
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
-    }
+    }*/
 }

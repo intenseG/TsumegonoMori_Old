@@ -1,102 +1,69 @@
 package com.example.oubeika.tsumegonomori;
 
-import java.io.Serializable;
+public class GoData {
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
-public class GoData extends RealmObject implements Serializable {
-
-    @PrimaryKey
-    private int id;
-    private String qNum;
-    private String teban;
-    private String level;
+    protected int id;
+    private String q_num;
+    private String q_level;
+    private String q_turn;
     private int colP;
     private int rowP;
-    private int stoneColorP;
+    private int colorP;
     private int colA;
     private int rowA;
-    private int stoneColorA;
+    private int colorA;
 
-    public String getQNum() {
-        return qNum;
-    }
+    public GoData(int id, String q_num, String q_level, String q_turn, int colP, int rowP, int colorP, int colA, int rowA, int colorA){
 
-    public void setQNum(String qNum) {
-        this.qNum = qNum;
-    }
-
-    public String getTeban() {
-        return teban;
-    }
-
-    public void setTeban(String teban) {
-        this.teban = teban;
-    }
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
-    public int getColP() {
-        return colP;
-    }
-
-    public void setColP(int colP) {
+        this.id = id;
+        this.q_num = q_num;
+        this.q_level = q_level;
+        this.q_turn = q_turn;
         this.colP = colP;
-    }
-
-    public int getRowP() {
-        return rowP;
-    }
-
-    public void setRowP(int rowP) {
         this.rowP = rowP;
-    }
-
-    public int getStoneColorP() {
-        return stoneColorP;
-    }
-
-    public void setStoneColorP(int stoneColorP) {
-        this.stoneColorP = stoneColorP;
-    }
-
-    public int getColA() {
-        return colA;
-    }
-
-    public void setColA(int colA) {
+        this.colorP = colorP;
         this.colA = colA;
-    }
-
-    public int getRowA() {
-        return rowA;
-    }
-
-    public void setRowA(int rowA) {
         this.rowA = rowA;
+        this.colorA = colorA;
     }
 
-    public int getStoneColorA() {
-        return stoneColorA;
-    }
-
-    public void setStoneColorA(int stoneColorA) {
-        this.stoneColorA = stoneColorA;
+    public int getColorA() {
+        return colorA;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getQ_num() {
+        return q_num;
+    }
+
+    public String getQ_level() {
+        return q_level;
+    }
+
+    public String getQ_turn() {
+        return q_turn;
+    }
+
+    public int getColP() {
+        return colP;
+    }
+
+    public int getRowP() {
+        return rowP;
+    }
+
+    public int getColorP() {
+        return colorP;
+    }
+
+    public int getColA() {
+        return colA;
+    }
+
+    public int getRowA() {
+        return rowA;
     }
 }

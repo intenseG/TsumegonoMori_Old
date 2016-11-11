@@ -18,7 +18,7 @@ import static com.example.oubeika.tsumegonomori.GameConst.TAG;
 
 public class Test extends AppCompatActivity {
 
-    @Override
+/*    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -60,5 +60,5 @@ public class Test extends AppCompatActivity {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

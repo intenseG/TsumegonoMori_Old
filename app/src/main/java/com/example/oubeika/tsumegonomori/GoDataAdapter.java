@@ -15,17 +15,18 @@ import java.util.List;
 public class GoDataAdapter extends ArrayAdapter<GoData> {
 
     private LayoutInflater layoutInflater;
-    private List<GoData> data = null;
+    private List<GoData> goDataList = new ArrayList<GoData>();
 
     public GoDataAdapter(Context context){
         super(context, 0);
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setGoData(List<GoData> details) {
-        this.data = details;
-    }
+/*    public void setGoDataList(List<GoData> details) {
+        this.dataList = details;
+    }*/
 
+/*
     @Override
     public int getCount() {
         if (data == null) {
@@ -46,8 +47,9 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
     public long getItemId(int i) {
         return i;
     }
+*/
 
-    @NonNull
+   /* @NonNull
     @Override
     public View getView(int pos, View convertView, @NonNull ViewGroup parent) {
 
@@ -59,14 +61,13 @@ public class GoDataAdapter extends ArrayAdapter<GoData> {
             );
         }
 
-        GoData godata = data.get(pos);
+        GoData godata = dataList.get(pos);
 
-        Log.d("QNUM2", String.valueOf(data.get(pos)));
         ((TextView) convertView.findViewById(R.id.q_num))
-                .setText(godata.getQNum());
+                .setText("Q" + godata.getQNum());
         ((TextView) convertView.findViewById(R.id.level))
                 .setText(godata.getLevel());
 
         return convertView;
-    }
+    }*/
 }

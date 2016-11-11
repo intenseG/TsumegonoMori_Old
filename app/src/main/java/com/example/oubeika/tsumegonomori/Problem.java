@@ -17,11 +17,11 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 //問題出題画面を表示するクラス
-public class Problem extends AppCompatActivity implements View.OnClickListener{
+public class Problem extends AppCompatActivity implements View.OnClickListener{  //implements View.OnClickListener
 
     private static final int LINE = 13;
-    private Realm realm;
-    private GoData goData;
+    //private Realm realm;
+    //private GoData goData;
     private TextView q_num, teban, level_text;
     private ImageView goban_13;
     private ImageView stone_b;
@@ -51,19 +51,18 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{
         next = (ImageButton) findViewById(R.id.button_skip_next);
         next.setOnClickListener(this);
 
-        realm = Realm.getDefaultInstance();
+        //realm = Realm.getDefaultInstance();
 
         Intent intent = getIntent();
         if (intent != null) {
-            String qNum = intent.getStringExtra("godata_q_num");
-            String level = intent.getStringExtra("godata_level");
-            String turn = intent.getStringExtra("godata_turn");
+            int id = intent.getIntExtra("id", 0);
+            String level = intent.getStringExtra("level");
 
-            q_num.setText(qNum);
+            q_num.setText("Q" + id);
             level_text.setText(level);
-            teban.setText(turn);
         }
     }
+
     // addStone();
 /*        goData = new GoData();
 
@@ -114,7 +113,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{
         }
     }
 
-    private void addStone() {
+   /* private void addStone() {
 
         int colP = goData.getColP();
         int rowP = goData.getRowP();
@@ -166,4 +165,4 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{
         teban.setText(turn);
         level_text.setText(level);
     }
-}
+*/}
