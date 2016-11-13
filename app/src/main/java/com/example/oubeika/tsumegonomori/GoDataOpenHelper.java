@@ -15,6 +15,7 @@ public class GoDataOpenHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "godata.db";
     private static final int DB_VER = 1;
 
+    private DBAdapter dbAdapter;
     private Context mContext;
 
     public GoDataOpenHelper(Context context) {
