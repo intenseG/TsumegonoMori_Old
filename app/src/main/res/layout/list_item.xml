@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:padding="8dp"
               android:orientation="horizontal"
               android:layout_width="match_parent"
@@ -7,14 +7,15 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:background="#99ffff"
         android:padding="8dp"
+        android:background="#64ae6d"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/q_num"
-            android:textSize="32sp"
+            android:textSize="36sp"
+            android:textColor="@android:color/black"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +25,8 @@
         <TextView
             android:id="@+id/level"
             android:textSize="24sp"
-            android:layout_marginLeft="16dp"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -32,4 +34,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

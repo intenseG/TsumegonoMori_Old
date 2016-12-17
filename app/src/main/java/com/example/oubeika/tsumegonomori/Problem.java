@@ -1,27 +1,19 @@
 package com.example.oubeika.tsumegonomori;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
-
 //問題出題画面を表示するクラス
-public class Problem extends AppCompatActivity implements View.OnClickListener{  //implements View.OnClickListener
+public class Problem extends AppCompatActivity implements View.OnClickListener {  //implements View.OnClickListener
 
+    private static final char Q = 'Q';
     private static final int LINE = 13;
-    //private Realm realm;
-    //private GoData goData;
     private TextView q_num, teban, level_text;
     private ImageView goban_13;
     private ImageView stone_b;
@@ -51,19 +43,41 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{ 
         next = (ImageButton) findViewById(R.id.button_skip_next);
         next.setOnClickListener(this);
 
-        //realm = Realm.getDefaultInstance();
-
         Intent intent = getIntent();
-        if (intent != null) {
-            int id = intent.getIntExtra("id", 0);
-            String level = intent.getStringExtra("level");
+        int id = intent.getIntExtra("_id", 0);
+        String level = intent.getStringExtra("level");
+        String goData = intent.getStringExtra("goData");
 
-            q_num.setText("Q" + id);
-            level_text.setText(level);
-        }
+        q_num.setText(Q + id);
+        level_text.setText(level);
     }
 
-    // addStone();
+    @Override
+    public void onClick(View view) {
+
+        if (view != null) {
+            switch (view.getId()) {
+                case R.id.button_undo:
+                    //1手戻る処理
+                    break;
+                case R.id.button_redo:
+                    //1手進む処理
+                    break;
+                case R.id.button_reload:
+                    //初期盤面に戻す処理
+                    break;
+                case R.id.button_skip_previous:
+                    //前の問題に戻る処理
+                    break;
+                case R.id.button_skip_next:
+                    //次の問題に進む処理
+                    break;
+            }
+        }
+    }
+}
+
+// addStone();
 /*        goData = new GoData();
 
         int col = goData.getColP();
@@ -88,30 +102,6 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{ 
                 }
             }
         }*/
-
-    @Override
-    public void onClick (View view){
-
-        if (view != null) {
-            switch (view.getId()) {
-                case R.id.button_undo:
-                    //1手戻る処理
-                    break;
-                case R.id.button_redo:
-                    //1手進む処理
-                    break;
-                case R.id.button_reload:
-                    //初期盤面に戻す処理
-                    break;
-                case R.id.button_skip_previous:
-                    //前の問題に戻る処理
-                    break;
-                case R.id.button_skip_next:
-                    //次の問題に進む処理
-                    break;
-            }
-        }
-    }
 
    /* private void addStone() {
 
@@ -142,27 +132,4 @@ public class Problem extends AppCompatActivity implements View.OnClickListener{ 
                 }
             }
         }
-    }
-
-    private void addGoData(){
-
-        Realm realm = Realm.getDefaultInstance();
-
-        if(goData != null){
-            goData = new GoData();
-
-            RealmResults<GoData> goDataRealmResults = realm.where(GoData.class).findAll();
-        }
-    }
-
-    private void addInfo(){
-
-        String qNum = goData.getQNum();
-        String turn = goData.getTeban();
-        String level = goData.getLevel();
-
-        q_num.setText(qNum);
-        teban.setText(turn);
-        level_text.setText(level);
-    }
-*/}
+    }*/

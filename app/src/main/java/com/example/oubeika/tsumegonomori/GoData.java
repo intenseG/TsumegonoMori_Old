@@ -3,67 +3,51 @@ package com.example.oubeika.tsumegonomori;
 public class GoData {
 
     protected int id;
-    //private String q_num;
-    private String q_level;
-    private String q_turn;
-    private int colP;
-    private int rowP;
-    private int colorP;
-    private int colA;
-    private int rowA;
-    private int colorA;
+    private String level;
+    private String goData;
 
-    public GoData(int id, String q_level, String q_turn, int colP, int rowP, int colorP, int colA, int rowA, int colorA){
+    /*public GoData(int id, String level, String goData) {
 
         this.id = id;
-        //this.q_num = q_num;
-        this.q_level = q_level;
-        this.q_turn = q_turn;
-        this.colP = colP;
-        this.rowP = rowP;
-        this.colorP = colorP;
-        this.colA = colA;
-        this.rowA = rowA;
-        this.colorA = colorA;
-    }
-
-    public int getColorA() {
-        return colorA;
-    }
+        this.level = level;
+        this.goData = goData;
+    }*/
 
     public int getId() {
         return id;
     }
 
-   /* public String getQ_num() {
-        return q_num;
-    }*/
-
-    public String getQ_level() {
-        return q_level;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getQ_turn() {
-        return q_turn;
+    public String getLevel() {
+        return level;
     }
 
-    public int getColP() {
-        return colP;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public int getRowP() {
-        return rowP;
+    public String getGoData() {
+        return goData;
     }
 
-    public int getColorP() {
-        return colorP;
+    public void setGoData(String goData) {
+        this.goData = goData;
     }
 
-    public int getColA() {
-        return colA;
-    }
-
-    public int getRowA() {
-        return rowA;
+    // validationチェック
+    public boolean validate() {
+        if (id < 0) {
+            return false;
+        }
+        if (level == null || level.length() == 0) {
+            return false;
+        }
+        if (goData == null || goData.length() == 0) {
+            return false;
+        }
+        return true;
     }
 }

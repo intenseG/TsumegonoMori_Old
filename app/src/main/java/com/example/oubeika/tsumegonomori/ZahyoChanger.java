@@ -1,145 +1,29 @@
 package com.example.oubeika.tsumegonomori;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import io.realm.Realm;
+import static com.example.oubeika.tsumegonomori.GameConst.*;
 
-import static com.example.oubeika.tsumegonomori.GameConst.BLACK;
-import static com.example.oubeika.tsumegonomori.GameConst.WHITE;
-import static com.example.oubeika.tsumegonomori.GameConst.TAG;
+public class ZahyoChanger extends AppCompatActivity {
 
-class ZahyoChanger extends AppCompatActivity {
-
-/*
+    private int colP, rowP, colA, rowA = 0;
+    private int stoneColor;
     private GoData goData;
-    private Realm realm = Realm.getDefaultInstance();
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    private void ProblemStone(final String problems, final int stoneColor) {
-
-        //realm = Realm.getDefaultInstance();
-        goData = new GoData();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-
-                //goData = new GoData();
-
-                int colP = intChanger(problems.charAt(0));
-                int rowP = intChanger(problems.charAt(1));
-
-                Log.d(TAG, String.valueOf(colP));
-                Log.d(TAG, String.valueOf(rowP));
-                Log.d(TAG, String.valueOf(stoneColor));
-
-                goData.setColP(colP);
-                goData.setRowP(rowP);
-                goData.setStoneColorP(stoneColor);
-
-    */
-/*    realm.beginTransaction();
-        realm.copyToRealmOrUpdate(goData);
-        realm.commitTransaction();*//*
-
-            }
-        });
-    }
-
-    private void AnswerStone(final String answers, final int stoneColor) {
-
-        //realm = Realm.getDefaultInstance();
-        goData = new GoData();
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-
-                //goData = new GoData();
-
-                int colA = intChanger(answers.charAt(0));
-                int rowA = intChanger(answers.charAt(1));
-
-                Log.d(TAG, String.valueOf(colA));
-                Log.d(TAG, String.valueOf(rowA));
-                Log.d(TAG, String.valueOf(stoneColor));
-
-                goData.setColA(colA);
-                goData.setRowA(rowA);
-                goData.setStoneColorA(stoneColor);
-            }
-        });
-*/
-/*        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(goData);
-        realm.commitTransaction();*//*
-
-    }
-
-    private void setQNum(final String qNum) {
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-
-                goData = new GoData();
-
-                String qNum2 = "Q" + qNum;
-
-                goData.setQNum(qNum2);
-            }
-        });
-     */
-/*   realm.beginTransaction();
-        realm.copyToRealmOrUpdate(goData);
-        realm.commitTransaction();*//*
-
-    }
-
-    private void setLevel(String level) {
+    public ZahyoChanger(String goDataText) {
 
         goData = new GoData();
 
-        goData.setLevel(level);
-
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(goData);
-        realm.commitTransaction();
+        goDataSeparate(goDataText);
     }
 
-    private void setTeban(String teban) {
-
-        goData = new GoData();
-
-        String teban2 = "";
-
-        if(teban.equals("b")){
-            teban2 = "黒先";
-        }else{
-            teban2 = "白先";
-        }
-
-        goData.setTeban(teban2);
-
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(goData);
-        realm.commitTransaction();
-    }
-
-    //ここでsを受け取って不要な文字を除去する
-    public void GoDataSeparate(String goData) {
+    //ここでデータを受け取って不要な文字を除去する
+    public void goDataSeparate(String goDataText) {
 
         int start;
         int stoneColor;
-        String[] split = (goData.split("@", 0));
+        String[] split = (goDataText.split("@", 0));
 
         for (String data : split) {
             if (data.startsWith("AB::")) {       //ここで黒かどうかを判定
@@ -151,7 +35,7 @@ class ZahyoChanger extends AppCompatActivity {
                     String splitZahyo[] = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
                     for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                         Log.d(TAG, zahyo);
-                        ProblemStone(zahyo, stoneColor);
+                        problemStone(zahyo, stoneColor);
                     }
                 }
             } else if (data.startsWith("AW::")) {           //ここで白かどうかを判定
@@ -163,7 +47,7 @@ class ZahyoChanger extends AppCompatActivity {
                     String splitZahyo[] = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
                     for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                         Log.d(TAG, zahyo);
-                        ProblemStone(zahyo, stoneColor);
+                        problemStone(zahyo, stoneColor);
                     }
                 }
             } else if (data.startsWith("B;")) {
@@ -175,7 +59,7 @@ class ZahyoChanger extends AppCompatActivity {
                     String[] splitZahyo = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
                     for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                         Log.d(TAG, zahyo);
-                        AnswerStone(zahyo, stoneColor);
+                        answerStone(zahyo, stoneColor);
                     }
                 }
             } else if (data.startsWith("W;")) {
@@ -187,7 +71,7 @@ class ZahyoChanger extends AppCompatActivity {
                     String[] splitZahyo = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
                     for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
                         Log.d(TAG, zahyo);
-                        AnswerStone(zahyo, stoneColor);
+                        answerStone(zahyo, stoneColor);
                     }
                 }
             } else if (data.startsWith("QN::")) {  //ここは必要ないから後で消す
@@ -197,7 +81,7 @@ class ZahyoChanger extends AppCompatActivity {
                     String qNum = data.substring(start + 4);
                     //後で数値をQ1などの形式に変換する
                     Log.d(TAG, qNum);
-                    setQNum(qNum);
+                    //setQNum(qNum);
                 }
             } else if (data.startsWith("TU::")) {
 
@@ -206,7 +90,7 @@ class ZahyoChanger extends AppCompatActivity {
                     String teban = data.substring(start + 4);
                     //後で手番情報を日本語に変換する
                     Log.d(TAG, teban);
-                    setTeban(teban);
+                    //setTeban(teban);
                 }
             } else if (data.startsWith("LV::")) {
                 start = data.indexOf("LV::");
@@ -214,10 +98,35 @@ class ZahyoChanger extends AppCompatActivity {
                     String level = data.substring(start + 4);
                     //後で数値を○級、○段のように変換する
                     Log.d(TAG, level);
-                    setLevel(level);
+                    //setLevel(level);
                 }
             }
         }
+    }
+
+    private void problemStone(String separatedGoData, int stoneColor) {
+
+        int colP = intChanger(separatedGoData.charAt(0));
+        int rowP = intChanger(separatedGoData.charAt(1));
+
+        Log.d(TAG, String.valueOf(colP));
+        Log.d(TAG, String.valueOf(rowP));
+        Log.d(TAG, String.valueOf(stoneColor));
+
+
+    }
+
+    private void answerStone(String separatedGoData, int stoneColor) {
+
+        int colA = intChanger(separatedGoData.charAt(0));
+        int rowA = intChanger(separatedGoData.charAt(1));
+
+        Log.d(TAG, String.valueOf(colA));
+        Log.d(TAG, String.valueOf(rowA));
+        Log.d(TAG, String.valueOf(stoneColor));
+
+        this.colA = colA;
+        this.rowA = rowA;
     }
 
     private int intChanger(char ch) {
@@ -288,5 +197,5 @@ class ZahyoChanger extends AppCompatActivity {
                 break;
         }
         return i;
-    }*/
+    }
 }

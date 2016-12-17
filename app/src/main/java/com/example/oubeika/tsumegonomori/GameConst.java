@@ -1,6 +1,6 @@
 package com.example.oubeika.tsumegonomori;
 
-class GameConst {
+public class GameConst {
 
     public final static String TAG = "LOGVIEW";
     public static final int SIZE = 15;

@@ -6,34 +6,28 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-class DBAdapter {
+public class DBAdapter {
 
-    private static final String DB_NAME = "goData.db";
+    private static final String DB_NAME = "godata.db";
+    private static final String TABLE_NAME = "goData";
     private static final int DB_VER = 1;
-    private static final String DB_TABLE = "goDataInfo";
 
-    static final String Q_NUM = "_id";
-    static final String Q_LEVEL = "q_level";
-    static final String Q_TURN = "q_turn";
-    static final String P_COL = "colP";
-    static final String P_ROW = "rowP";
-    static final String P_COLOR = "colorP";
-    static final String A_COL = "colA";
-    static final String A_ROW = "rowA";
-    static final String A_COLOR = "colorA";
-
+    public static final String COL_ID = "_id";
+    public static final String COL_LEVEL = "level";
+    public static final String COL_GODATA = "godata";
 
     private SQLiteDatabase db = null;
     private DBHelper dbHelper = null;
-    protected final Context context;
+    protected Context context;
 
-    public DBAdapter(Context context) {
+    DBAdapter(Context context) {
         this.context = context;
         dbHelper = new DBHelper(this.context);
     }
@@ -49,7 +43,8 @@ class DBAdapter {
     }
 
     public void close() {
-        dbHelper.close();
+        db.close();
+        db = null;
     }
 
 /*    public boolean deleteAllNotes(){
@@ -61,21 +56,27 @@ class DBAdapter {
     }
     public Cursor getAllNotes(){
         return db.query("goDataInfo", null, null, null, null, null, null);
-    }*/
+    }
+*/
 
-    public void saveDB(int q_num, String q_level, String q_turn, int colP, int rowP, int colorP, int colA, int rowA, int colorA){
-        ContentValues values = new ContentValues();
-        values.put(Q_NUM, q_num);
-        values.put(Q_LEVEL, q_level);
-        values.put(Q_TURN, q_turn);
-        values.put(P_COL, colP);
-        values.put(P_ROW, rowP);
-        values.put(P_COLOR, colorP);
-        values.put(A_COL, colA);
-        values.put(A_ROW, rowA);
-        values.put(A_COLOR, colorA);
+    public void saveDB(int id, String level, String goData) {
 
-        db.insertOrThrow(DB_TABLE, null, values);
+        db.beginTransaction();
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COL_ID, id);
+            values.put(COL_LEVEL, level);
+            values.put(COL_GODATA, goData);
+
+            db.insert(TABLE_NAME, null, values);      //レコードへ登録
+
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public Cursor getDB(String[] columns) {
@@ -88,11 +89,11 @@ class DBAdapter {
         // 第5引数：集計条件(GROUP BY句)
         // 第6引数：選択条件(HAVING句)
         // 第7引数：ソート条件(ORDERBY句)
-        return db.query(DB_TABLE, columns, null, null, null, null, null);
+        return db.query(TABLE_NAME, columns, null, null, null, null, null);
     }
 
     public Cursor searchDB(String[] columns, String column, String[] name) {
-        return db.query(DB_TABLE, columns, column + " like ?", name, null, null, null);
+        return db.query(TABLE_NAME, columns, column + " like ?", name, null, null, null);
     }
 
     /**
@@ -107,7 +108,20 @@ class DBAdapter {
             // 第1引数：テーブル名
             // 第2引数：削除する条件式 nullの場合は全レコードを削除
             // 第3引数：第2引数で?を使用した場合に使用
-            db.delete(DB_TABLE, null, null);        // DBのレコードを全削除
+            db.delete(TABLE_NAME, null, null);        // DBのレコードを全削除
+            db.setTransactionSuccessful();          // トランザクションへコミット
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            db.endTransaction();                    // トランザクションの終了
+        }
+    }
+
+    public void selectDelete(String pos) {
+
+        db.beginTransaction();                      // トランザクション開始
+        try {
+            db.delete(TABLE_NAME, COL_ID + "=?", new String[]{pos});
             db.setTransactionSuccessful();          // トランザクションへコミット
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,9 +132,9 @@ class DBAdapter {
 
     private static class DBHelper extends SQLiteOpenHelper {
 
-        Context mContext;
+        private Context mContext;
 
-        DBHelper(Context context) {
+        public DBHelper(Context context) {
             super(context, DB_NAME, null, DB_VER);
             mContext = context;
         }
@@ -128,9 +142,8 @@ class DBAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
 
-            // create table
             try {
-                execSql(db, "sql/create");
+                loadSql(db,"sql/create");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -139,43 +152,35 @@ class DBAdapter {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-            // drop table
-            try {
-                execSql(db, "sql/drop");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            db.execSQL("drop table if exists" + TABLE_NAME);
+
             onCreate(db);
         }
 
-        private void execSql(SQLiteDatabase db, String assetsDir) throws IOException {
-
+        private void loadSql(SQLiteDatabase db,String assetsDir) throws IOException {
             AssetManager as = mContext.getResources().getAssets();
             try {
                 String files[] = as.list(assetsDir);
                 for (int i = 0; i < files.length; i++) {
                     String str = readFile(as.open(assetsDir + "/" + files[i]));
-                    for (String sql : str.split("/")) {
+                    for (String sql: str.split("/")){
                         db.execSQL(sql);
-                        db.setTransactionSuccessful();
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                db.endTransaction();
             }
         }
 
-        private String readFile(InputStream is) throws IOException {
+        private String readFile(InputStream is) throws IOException{
             BufferedReader br = null;
             try {
-                br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                br = new BufferedReader(new InputStreamReader(is,"SJIS"));
 
                 StringBuilder sb = new StringBuilder();
                 String str;
-                while ((str = br.readLine()) != null) {
-                    sb.append(str).append("\n");
+                while((str = br.readLine()) != null){
+                    sb.append(str +"\n");
                 }
                 return sb.toString();
             } finally {
