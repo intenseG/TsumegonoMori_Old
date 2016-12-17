@@ -15,11 +15,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "godata.db";
     private static final int DB_VER = 1;
-/*    public static final String TABLE_NAME = "goData";
+    public static final String TABLE_NAME = "goData";
 
     public static final String COL_ID = "_id";
     public static final String COL_LEVEL = "level";
-    public static final String COL_GODATA = "godata";*/
+    public static final String COL_GODATA_P = "goDataP";
+    public static final String COL_GODATA_A = "goDataA";
 
     //private Context mContext;
 

@@ -48,7 +48,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         String level = intent.getStringExtra("level");
         String goData = intent.getStringExtra("goData");
 
-        q_num.setText(Q + id);
+        q_num.setText("Stage " + id);
         level_text.setText(level);
     }
 

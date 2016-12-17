@@ -8,25 +8,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.channels.FileChannel;
 
-import static com.example.oubeika.tsumegonomori.GameConst.BLACK;
 import static com.example.oubeika.tsumegonomori.GameConst.TAG;
-import static com.example.oubeika.tsumegonomori.GameConst.WHITE;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private SQLiteDatabase db;
-    private String goDataText;
-    private GoData goData;
+    protected GoData goData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +41,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GoDataDao goDataDao = new GoDataDao(db);
 
         try {
-            goDataText = loadGoData();
+            String goDataText = loadGoData();
             String[] splitGoData = goDataText.split("/", 0);
             for (String newGoData : splitGoData) {
-                goDataSeparate(newGoData);
+                goData = goDataSeparate(newGoData);
+
+                Log.d("GoData", goData.getId());
+                Log.d("GoData", goData.getLevel());
+                Log.d("GoData", goData.getGoDataP());
+                Log.d("GoData", goData.getGoDataA());
+
+                if (goDataDao.save(goData) < 0) {
+                    throw new Exception("could not save GoData");
+                }
             }
-        } catch (IOException e) {
+            Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
+
+       /*     if (goDataDao.save(goData) < 0) {
+                throw new Exception("could not save GoData");
+            }
+            Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();*/
+
+            // 保存に成功したらアクティビティを閉じる
+            finish();
+        } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(this, "詰碁データの読み込みに失敗しました。", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -70,72 +83,52 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //ここでデータを受け取って不要な文字を除去する
-    public void goDataSeparate(String goDataText) {
+    private GoData goDataSeparate(String goDataText) {
 
+        GoData goData = new GoData();
         int start;
-        int stoneColor;
-        String[] split = (goDataText.split("@", 0));
+        String allGoData;
+        String[] split = (goDataText.split(",", 0));
 
         for (String data : split) {
             if (data.startsWith("AB::")) {       //ここで黒かどうかを判定
 
-                stoneColor = BLACK;
                 start = data.indexOf("AB::");
                 if (start != -1) {
-                    String allZahyo = data.substring(start + 4);   //黒の初期配置座標の文字列を取得
-                    String splitZahyo[] = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                    for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
-                        Log.d(TAG, zahyo);
-                    }
+                    allGoData = data.substring(start);   //黒の初期配置座標の文字列を取得
+                    Log.d(TAG, allGoData);
+                    goData.setGoDataP(allGoData);
                 }
-            } else if (data.startsWith("AW::")) {           //ここで白かどうかを判定
+            }
+            if (data.startsWith("B;")) {
 
-                stoneColor = WHITE;
-                start = data.indexOf("AW::");       //AWの位置を取得
-                if (start != -1) {
-                    String allZahyo = data.substring(start + 4);   //黒の初期配置座標の文字列を取得
-                    String splitZahyo[] = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                    for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
-                        Log.d(TAG, zahyo);
-                    }
-                }
-            } else if (data.startsWith("B;")) {
-
-                stoneColor = BLACK;
                 start = data.indexOf("B;");
                 if (start != -1) {
-                    String allZahyo = data.substring(start + 2);   //黒の初期配置座標の文字列を取得
-                    String[] splitZahyo = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                    for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
-                        Log.d(TAG, zahyo);
-                    }
+                    allGoData = data.substring(start);   //黒の初期配置座標の文字列を取得
+                    Log.d(TAG, allGoData);
+                    goData.setGoDataA(allGoData);
                 }
-            }  else if (data.startsWith("W;")) {
-
-                stoneColor = WHITE;
-                start = data.indexOf("W;");
-                if (start != -1) {
-                    String allZahyo = data.substring(start + 2);   //黒の初期配置座標の文字列を取得
-                    String[] splitZahyo = (allZahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                    for (String zahyo : splitZahyo) {   //座標を1つずつ読み込むループ文
-                        Log.d(TAG, zahyo);
-                    }
-                }
-            } else if (data.startsWith("QN::")) {  //ここは必要ないから後で消す
+            }
+            if (data.startsWith("QN::")) {
 
                 start = data.indexOf("QN::");
                 if (start != -1) {
                     String qNum = data.substring(start + 4);
                     Log.d(TAG, qNum);
+                    goData.setId(qNum);
                 }
-            } else if (data.startsWith("LV::")) {
+            }
+            if (data.startsWith("LV::")) {
+
                 start = data.indexOf("LV::");
                 if (start != -1) {
                     String level = data.substring(start + 4);
                     Log.d(TAG, level);
+                    goData.setLevel(level);
                 }
             }
         }
+        return goData;
     }
 
     private String loadGoData() throws IOException {
@@ -160,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             StringBuilder sb = new StringBuilder();
             String str;
             while ((str = br.readLine()) != null) {
-                    sb.append(str); //.append("\n")
+                sb.append(str); //.append("\n")
             }
             return sb.toString();
         } finally {

@@ -14,8 +14,8 @@ class ListAdapter extends ArrayAdapter<GoData> {
     private LayoutInflater inflater;
     private TextView q_num;
     private TextView level;
-    //private Context context = null;
-    //private List<GoData> items = null;
+    private Context context = null;
+    private List<GoData> items = null;
 
  /*   private class ViewHolder {
         TextView q_num;
@@ -25,18 +25,18 @@ class ListAdapter extends ArrayAdapter<GoData> {
     public ListAdapter(Context context, List<GoData> items) {
         super(context, 0, items);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //this.context = context;
-        //this.items = items;
+        this.context = context;
+        this.items = items;
     }
 
-/*
+
     @Override
     public int getCount() {
         return items.size();
     }
 
     @Override
-    public Object getItem(int pos) {
+    public GoData getItem(int pos) {
         return items.get(pos);
     }
 
@@ -44,7 +44,6 @@ class ListAdapter extends ArrayAdapter<GoData> {
     public long getItemId(int pos) {
         return pos;
     }
-*/
 
     @NonNull
     @Override
@@ -63,9 +62,9 @@ class ListAdapter extends ArrayAdapter<GoData> {
 
         if (goData != null) {
             q_num = (TextView) convertView.findViewById(R.id.q_num);
-            q_num.setText("Stage" + String.valueOf(goData.getId()));
-           /* level = (TextView) convertView.findViewById(R.id.level);
-            level.setText(goData.getLevel());*/
+            q_num.setText("Stage" + goData.getId());
+            level = (TextView) convertView.findViewById(R.id.level);
+            level.setText(goData.getLevel());
         }
 
         return convertView;

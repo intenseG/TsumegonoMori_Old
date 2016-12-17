@@ -5,7 +5,7 @@ import android.util.Log;
 
 import static com.example.oubeika.tsumegonomori.GameConst.*;
 
-public class ZahyoChanger extends AppCompatActivity {
+public class ZahyoChanger {
 
     private int colP, rowP, colA, rowA = 0;
     private int stoneColor;
@@ -19,7 +19,7 @@ public class ZahyoChanger extends AppCompatActivity {
     }
 
     //ここでデータを受け取って不要な文字を除去する
-    public void goDataSeparate(String goDataText) {
+    private void goDataSeparate(String goDataText) {
 
         int start;
         int stoneColor;

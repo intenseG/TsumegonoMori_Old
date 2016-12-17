@@ -2,22 +2,16 @@ package com.example.oubeika.tsumegonomori;
 
 public class GoData {
 
-    protected int id;
+    private String id;
     private String level;
-    private String goData;
+    private String goDataP;
+    private String goDataA;
 
-    /*public GoData(int id, String level, String goData) {
-
-        this.id = id;
-        this.level = level;
-        this.goData = goData;
-    }*/
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -29,23 +23,34 @@ public class GoData {
         this.level = level;
     }
 
-    public String getGoData() {
-        return goData;
+    public String getGoDataP() {
+        return goDataP;
     }
 
-    public void setGoData(String goData) {
-        this.goData = goData;
+    public void setGoDataP(String goDataP) {
+        this.goDataP = goDataP;
+    }
+
+    public String getGoDataA() {
+        return goDataA;
+    }
+
+    public void setGoDataA(String goDataA) {
+        this.goDataA = goDataA;
     }
 
     // validationチェック
     public boolean validate() {
-        if (id < 0) {
+        if (id == null || id.length() == 0) {
             return false;
         }
         if (level == null || level.length() == 0) {
             return false;
         }
-        if (goData == null || goData.length() == 0) {
+        if (goDataP == null || goDataP.length() == 0) {
+            return false;
+        }
+        if (goDataA == null || goDataA.length() == 0) {
             return false;
         }
         return true;
