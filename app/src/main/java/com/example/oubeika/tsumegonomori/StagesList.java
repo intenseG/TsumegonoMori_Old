@@ -45,10 +45,10 @@ public class StagesList extends ListActivity {
 
                 Cursor c = (Cursor) listView.getItemAtPosition(pos);
                 Intent intent = new Intent(StagesList.this, Problem.class);
-                intent.putExtra("id", c.getString(c.getColumnIndex(DBHelper.COL_ID)));
-                intent.putExtra("level", c.getString(c.getColumnIndex(DBHelper.COL_LEVEL)));
-                intent.putExtra("goDataP", c.getString(c.getColumnIndex(DBHelper.COL_GODATA_P)));
-                intent.putExtra("goDataA", c.getString(c.getColumnIndex(DBHelper.COL_GODATA_A)));
+                intent.putExtra("number", c.getString(c.getColumnIndex(GoDataDao.COL_NUMBER)));
+                intent.putExtra("level", c.getString(c.getColumnIndex(GoDataDao.COL_LEVEL)));
+                intent.putExtra("goDataP", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_P)));
+                intent.putExtra("goDataA", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_A)));
 
                 startActivity(intent);
             }

@@ -2,17 +2,26 @@ package com.example.oubeika.tsumegonomori;
 
 public class GoData {
 
-    private String id;
+    private int id;
+    private String number;
     private String level;
     private String goDataP;
     private String goDataA;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getLevel() {
@@ -41,7 +50,7 @@ public class GoData {
 
     // validationチェック
     public boolean validate() {
-        if (id == null || id.length() == 0) {
+        if (id < 0) {
             return false;
         }
         if (level == null || level.length() == 0) {

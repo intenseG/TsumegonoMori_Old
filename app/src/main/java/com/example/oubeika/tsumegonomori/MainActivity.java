@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (String newGoData : splitGoData) {
                 goData = goDataSeparate(newGoData);
 
-                Log.d("GoData", goData.getId());
+                Log.d("GoData", goData.getNumber());
                 Log.d("GoData", goData.getLevel());
                 Log.d("GoData", goData.getGoDataP());
                 Log.d("GoData", goData.getGoDataA());
@@ -57,13 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
 
-       /*     if (goDataDao.save(goData) < 0) {
-                throw new Exception("could not save GoData");
-            }
-            Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();*/
-
             // 保存に成功したらアクティビティを閉じる
-            finish();
+            //finish();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "詰碁データの読み込みに失敗しました。", Toast.LENGTH_LONG).show();
@@ -115,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (start != -1) {
                     String qNum = data.substring(start + 4);
                     Log.d(TAG, qNum);
-                    goData.setId(qNum);
+                    goData.setNumber(qNum);
                 }
             }
             if (data.startsWith("LV::")) {

@@ -10,16 +10,18 @@ import java.util.List;
 public class GoDataDao {
 
     static final String TABLE_NAME = "goData";
-    static final String COL_ID = "_id";
+    static final String COL_ID = "id";
+    static final String COL_NUMBER = "number";
     static final String COL_LEVEL = "level";
     static final String COL_GODATA_P = "goDataP";
     static final String COL_GODATA_A = "goDataA";
-    static final String[] COLUMNS = { COL_ID, COL_LEVEL, COL_GODATA_P, COL_GODATA_A };
-    public static final String CREATE_SQL = "create table"
+    static final String[] COLUMNS = { COL_NUMBER, COL_LEVEL, COL_GODATA_P, COL_GODATA_A };
+    public static final String CREATE_SQL = "create table "
             + TABLE_NAME + " ("
             + COL_ID + " integer primary key autoincrement,"
+            + COL_NUMBER + " text not null,"
             + COL_LEVEL + " text not null,"
-            + COL_GODATA_P + " text not null"
+            + COL_GODATA_P + " text not null,"
             + COL_GODATA_A + " text not null"
             + ");";
 
@@ -32,16 +34,17 @@ public class GoDataDao {
     public List<GoData> findAll() {
         List<GoData> list = new ArrayList<GoData>();
         // query
-        Cursor c = db.query(TABLE_NAME, COLUMNS, null, null, null, null,
-                COL_ID);
-        // 1行ずつfetch
-        while (c.moveToNext()) {
-            GoData goData = new GoData();
-            goData.setId(c.getString(c.getColumnIndex(COL_ID)));
-            goData.setLevel(c.getString(c.getColumnIndex(COL_LEVEL)));
-            goData.setGoDataP(c.getString(c.getColumnIndex(COL_GODATA_P)));
-            goData.setGoDataA(c.getString(c.getColumnIndex(COL_GODATA_A)));
-            list.add(goData);
+        Cursor c = db.query(TABLE_NAME, COLUMNS, null, null, null, null, null, "5"); //1ステージごとに取得する問題数
+
+        if (c.moveToFirst()) {
+            while (c.moveToNext()) {
+                GoData goData = new GoData();
+                goData.setNumber(c.getString(c.getColumnIndex(COL_NUMBER)));
+                goData.setLevel(c.getString(c.getColumnIndex(COL_LEVEL)));
+                goData.setGoDataP(c.getString(c.getColumnIndex(COL_GODATA_P)));
+                goData.setGoDataA(c.getString(c.getColumnIndex(COL_GODATA_A)));
+                list.add(goData);
+            }
         }
 
         // cursorのclose
@@ -55,17 +58,17 @@ public class GoDataDao {
             return -1;
         }
         ContentValues values = new ContentValues();
-        values.put(COL_ID, goData.getId());
+        values.put(COL_NUMBER, goData.getNumber());
         values.put(COL_LEVEL, goData.getLevel());
         values.put(COL_GODATA_P, goData.getGoDataP());
         values.put(COL_GODATA_A, goData.getGoDataA());
 
         if (exists()) {
-            String where = COL_ID + " = ?";
-            String[] arg = { goData.getId() };
+            String where = COL_NUMBER + " = ?";
+            String[] arg = {goData.getNumber()};
             return db.update(TABLE_NAME, values, where, arg);
         } else {
-            values.put(COL_ID, goData.getId());
+            values.put(COL_NUMBER, goData.getNumber());
             values.put(COL_LEVEL, goData.getLevel());
             values.put(COL_GODATA_P, goData.getGoDataP());
             values.put(COL_GODATA_A, goData.getGoDataA());
