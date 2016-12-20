@@ -12,61 +12,43 @@ import java.util.List;
 class ListAdapter extends ArrayAdapter<GoData> {
 
     private LayoutInflater inflater;
-    private TextView q_num;
-    private TextView level;
-    private Context context = null;
-    private List<GoData> items = null;
+    GoData goData;
+    //private TextView q_num;
+    //private TextView level;
+    //private Context context = null;
+    //private List<GoData> items = null;
 
- /*   private class ViewHolder {
+    private class ViewHolder {
         TextView q_num;
         TextView level;
-    }*/
+    }
 
     public ListAdapter(Context context, List<GoData> items) {
         super(context, 0, items);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.context = context;
-        this.items = items;
-    }
-
-
-    @Override
-    public int getCount() {
-        return items.size();
-    }
-
-    @Override
-    public GoData getItem(int pos) {
-        return items.get(pos);
-    }
-
-    @Override
-    public long getItemId(int pos) {
-        return pos;
+        //this.context = context;
+        //this.items = items;
     }
 
     @NonNull
     @Override
     public View getView(int pos, View convertView, @NonNull ViewGroup parent) {
-
-        //return new GoDataView(context, items.get(pos));
-
-        //View view = convertView;
-        //ViewHolder holder;
-
+        ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.list_item, parent, false);
+            holder = new ViewHolder();
+            holder.q_num = (TextView) convertView.findViewById(R.id.q_num);
+            holder.level = (TextView) convertView.findViewById(R.id.level);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
         //データを取得
-        final GoData goData = this.getItem(pos);
+        goData = getItem(pos);
 
         if (goData != null) {
-            q_num = (TextView) convertView.findViewById(R.id.q_num);
-            q_num.setText("Stage" + goData.getId());
-            level = (TextView) convertView.findViewById(R.id.level);
-            level.setText(goData.getLevel());
+            holder.q_num.setText("Stage" + goData.getNumber());
+            holder.level.setText(goData.getLevel());
         }
-
         return convertView;
 
             /*TextView q_num = (TextView) view.findViewById(R.id.q_num);

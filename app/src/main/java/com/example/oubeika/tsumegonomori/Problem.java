@@ -4,52 +4,69 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//問題出題画面を表示するクラス
-public class Problem extends AppCompatActivity implements View.OnClickListener {  //implements View.OnClickListener
+import static com.example.oubeika.tsumegonomori.GameConst.*;
 
-    private static final char Q = 'Q';
-    private static final int LINE = 13;
-    private TextView q_num, teban, level_text;
+//問題出題画面を表示するクラス
+public class Problem extends AppCompatActivity implements View.OnClickListener {
+
+    private TextView q_num, level_text, teban;
     private ImageView goban_13;
-    private ImageView stone_b;
-    private ImageView stone_w;
+    private ImageView stone;
     private ImageButton undo, redo, reload, previous, next;
+
+    private Board board;
+    private GoDataParse gdp;
+
+    private int[] stoneImage = {
+            R.drawable.stone1,
+            R.drawable.stone2
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.problem_screen);
 
-        // UI部品の設定
-        goban_13 = (ImageView) findViewById(R.id.goban_13);
-        stone_b = (ImageView) findViewById(R.id.stone_b);
-        stone_w = (ImageView) findViewById(R.id.stone_w);
-        q_num = (TextView) findViewById(R.id.q_num);
-        teban = (TextView) findViewById(R.id.teban);
-        level_text = (TextView) findViewById(R.id.level_text);
-        undo = (ImageButton) findViewById(R.id.button_undo);
-        undo.setOnClickListener(this);
-        redo = (ImageButton) findViewById(R.id.button_redo);
-        redo.setOnClickListener(this);
-        reload = (ImageButton) findViewById(R.id.button_reload);
-        reload.setOnClickListener(this);
-        previous = (ImageButton) findViewById(R.id.button_skip_previous);
-        previous.setOnClickListener(this);
-        next = (ImageButton) findViewById(R.id.button_skip_next);
-        next.setOnClickListener(this);
+        setView();
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("_id", 0);
+        String number = intent.getStringExtra("number");
         String level = intent.getStringExtra("level");
-        String goData = intent.getStringExtra("goData");
+        String goDataP = intent.getStringExtra("goDataP");
+        String goDataA = intent.getStringExtra("goDataA");
 
-        q_num.setText("Stage " + id);
+        q_num.setText("Q " + number);
         level_text.setText(level);
+
+        if (goDataP != null && goDataA != null) {
+            gdp = new GoDataParse(goDataP, goDataA);
+        }
+
+        Log.d("colP", String.valueOf(gdp.getColP()));
+        Log.d("rowP", String.valueOf(gdp.getRowP()));
+        Log.d("stoneColorP", String.valueOf(gdp.getStoneColorP()));
+
+        board.initStone(gdp.getColP(), gdp.getRowP(), gdp.getStoneColorP());
+
+        int[][] ban = board.getRawBoard();
+        for (int col = 0; col < BOARD_SIZE; col++) {
+            for (int row = 0; row < BOARD_SIZE; row++) {
+                switch (ban[col][row]) {
+                    case BLACK:
+                        stone.setImageResource(stoneImage[0]);
+                        break;
+                    case WHITE:
+                        stone.setImageResource(stoneImage[1]);
+                        break;
+                }
+            }
+        }
     }
 
     @Override
@@ -75,7 +92,28 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
             }
         }
     }
+
+    private void setView() {
+        // UI部品の設定
+        goban_13 = (ImageView) findViewById(R.id.goban_13);
+        stone = (ImageView) findViewById(R.id.stone);
+        q_num = (TextView) findViewById(R.id.q_num);
+        teban = (TextView) findViewById(R.id.teban);
+        level_text = (TextView) findViewById(R.id.level_text);
+        undo = (ImageButton) findViewById(R.id.button_undo);
+        undo.setOnClickListener(this);
+        redo = (ImageButton) findViewById(R.id.button_redo);
+        redo.setOnClickListener(this);
+        reload = (ImageButton) findViewById(R.id.button_reload);
+        reload.setOnClickListener(this);
+        previous = (ImageButton) findViewById(R.id.button_skip_previous);
+        previous.setOnClickListener(this);
+        next = (ImageButton) findViewById(R.id.button_skip_next);
+        next.setOnClickListener(this);
+    }
 }
+
+
 
 // addStone();
 /*        goData = new GoData();

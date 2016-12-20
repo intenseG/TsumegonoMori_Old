@@ -13,9 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.support.v7.appcompat.R.styleable.View;
-
-public class StagesList extends ListActivity {
+public class StagesList extends ListActivity implements AdapterView.OnItemClickListener {
 
     private SQLiteDatabase db;
     private List<GoData> goDataList;
@@ -26,6 +24,7 @@ public class StagesList extends ListActivity {
         setContentView(R.layout.problem_list);
 
         ListView stage_list = (ListView) findViewById(android.R.id.list);
+        stage_list.setOnItemClickListener(this);
 
         // Database接続
         DBHelper dbHelper = new DBHelper(this);
@@ -37,21 +36,19 @@ public class StagesList extends ListActivity {
         ListAdapter adapter = new ListAdapter(getApplicationContext(), goDataList);
 
         setListAdapter(adapter);
+    }
 
-        stage_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-                ListView listView = (ListView) parent;
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+        ListView listView = (ListView) parent;
 
-                Cursor c = (Cursor) listView.getItemAtPosition(pos);
-                Intent intent = new Intent(StagesList.this, Problem.class);
-                intent.putExtra("number", c.getString(c.getColumnIndex(GoDataDao.COL_NUMBER)));
-                intent.putExtra("level", c.getString(c.getColumnIndex(GoDataDao.COL_LEVEL)));
-                intent.putExtra("goDataP", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_P)));
-                intent.putExtra("goDataA", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_A)));
+        Cursor c = (Cursor) listView.getItemAtPosition(pos);
+        Intent intent = new Intent(StagesList.this, Problem.class);
+        intent.putExtra("number", c.getString(c.getColumnIndex(GoDataDao.COL_NUMBER)));
+        intent.putExtra("level", c.getString(c.getColumnIndex(GoDataDao.COL_LEVEL)));
+        intent.putExtra("goDataP", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_P)));
+        intent.putExtra("goDataA", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_A)));
 
-                startActivity(intent);
-            }
-        });
+        startActivity(intent);
     }
 }

@@ -19,15 +19,15 @@
         </activity>
         <activity
             android:name=".StagesList"
-            android:label="@string/normal"
+            android:label="@string/stage_list"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"/>
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.oubeika.tsumegonomori.StagesList"/>
+            android:value="com.example.oubeika.tsumegonomori.MainActivity"/>
         <activity
             android:name=".Problem"
-            android:label="@string/normal"
+            android:label="@string/problem"
             android:theme="@style/AppTheme"
             android:parentActivityName=".StagesList"/>
         <meta-data

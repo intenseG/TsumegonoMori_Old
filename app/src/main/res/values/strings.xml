@@ -10,4 +10,7 @@
     <string name="first_w">白先</string>
     <string name="empty_message">データがありません。</string>
     <string name="stage">Stage</string>
+    <string name="stage_list">ステージリスト</string>
+    <string name="problem">問題</string>
+
 </resources>

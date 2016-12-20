@@ -112,8 +112,6 @@ public class ZahyoChanger {
         Log.d(TAG, String.valueOf(colP));
         Log.d(TAG, String.valueOf(rowP));
         Log.d(TAG, String.valueOf(stoneColor));
-
-
     }
 
     private void answerStone(String separatedGoData, int stoneColor) {
