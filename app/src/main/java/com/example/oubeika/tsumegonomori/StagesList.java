@@ -33,7 +33,7 @@ public class StagesList extends ListActivity implements AdapterView.OnItemClickL
 
         goDataList = goDataDao.findAll();
 
-        ListAdapter adapter = new ListAdapter(getApplicationContext(), goDataList);
+        ListAdapter adapter = new ListAdapter(this, goDataList);
 
         setListAdapter(adapter);
     }
@@ -42,12 +42,24 @@ public class StagesList extends ListActivity implements AdapterView.OnItemClickL
     public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
         ListView listView = (ListView) parent;
 
-        Cursor c = (Cursor) listView.getItemAtPosition(pos);
+        GoData data = (GoData) listView.getItemAtPosition(pos);
+        Intent intent = new Intent(StagesList.this, Problem.class);
+        intent.putExtra("number", data.getNumber());
+        intent.putExtra("level", data.getLevel());
+        intent.putExtra("goDataP", data.getGoDataP());
+        intent.putExtra("goDataA", data.getGoDataA());
+
+        Log.d("number", data.getNumber());
+        Log.d("level", data.getLevel());
+        Log.d("goDataP", data.getGoDataP());
+        Log.d("goDataA", data.getGoDataA());
+
+   /*     Cursor c = (Cursor) listView.getItemAtPosition(pos);
         Intent intent = new Intent(StagesList.this, Problem.class);
         intent.putExtra("number", c.getString(c.getColumnIndex(GoDataDao.COL_NUMBER)));
         intent.putExtra("level", c.getString(c.getColumnIndex(GoDataDao.COL_LEVEL)));
         intent.putExtra("goDataP", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_P)));
-        intent.putExtra("goDataA", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_A)));
+        intent.putExtra("goDataA", c.getString(c.getColumnIndex(GoDataDao.COL_GODATA_A)));*/
 
         startActivity(intent);
     }

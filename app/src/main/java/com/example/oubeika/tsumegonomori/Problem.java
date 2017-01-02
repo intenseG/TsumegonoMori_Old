@@ -21,6 +21,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
     private ImageButton undo, redo, reload, previous, next;
 
     private Board board;
+    private Zahyo zahyo;
     private GoDataParse gdp;
 
     private int[] stoneImage = {
@@ -35,26 +36,28 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
 
         setView();
 
+        board = new Board();
+        zahyo = new Zahyo();
+
         Intent intent = getIntent();
         String number = intent.getStringExtra("number");
         String level = intent.getStringExtra("level");
         String goDataP = intent.getStringExtra("goDataP");
         String goDataA = intent.getStringExtra("goDataA");
 
-        q_num.setText("Q " + number);
+        q_num.setText("Q" + number);
         level_text.setText(level);
 
-        if (goDataP != null && goDataA != null) {
-            gdp = new GoDataParse(goDataP, goDataA);
-        }
+        gdp = new GoDataParse(goDataP, goDataA);
 
-        Log.d("colP", String.valueOf(gdp.getColP()));
-        Log.d("rowP", String.valueOf(gdp.getRowP()));
-        Log.d("stoneColorP", String.valueOf(gdp.getStoneColorP()));
+        Log.d("colP", String.valueOf(zahyo.getColP()));
+        Log.d("rowP", String.valueOf(zahyo.getRowP()));
+        Log.d("stoneColorP", String.valueOf(zahyo.getStoneColorP()));
 
-        board.initStone(gdp.getColP(), gdp.getRowP(), gdp.getStoneColorP());
+        board.initStone(zahyo.getStoneColorP(), zahyo.getColP(), zahyo.getRowP());
 
         int[][] ban = board.getRawBoard();
+
         for (int col = 0; col < BOARD_SIZE; col++) {
             for (int row = 0; row < BOARD_SIZE; row++) {
                 switch (ban[col][row]) {

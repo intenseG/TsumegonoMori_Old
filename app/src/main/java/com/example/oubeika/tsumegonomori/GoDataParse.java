@@ -1,36 +1,30 @@
 package com.example.oubeika.tsumegonomori;
 
-import android.util.Log;
-
-import static com.example.oubeika.tsumegonomori.GameConst.BLACK;
-import static com.example.oubeika.tsumegonomori.GameConst.TAG;
-import static com.example.oubeika.tsumegonomori.GameConst.WHITE;
+import static com.example.oubeika.tsumegonomori.Disc.*;
 
 public class GoDataParse {
 
-    private String goDataP;
-    private String goDataA;
-    private int colP;
+    private Zahyo zahyo;
+
+/*    private int colP;
     private int rowP;
     private int stoneColorP;
     private int colA;
     private int rowA;
-    private int stoneColorA;
+    private int stoneColorA;*/
 
     private int start;
     private int end;
 
     public GoDataParse(String goDataP, String goDataA) {
-
-        colP = 0;
+        
+  /*      colP = 0;
         rowP = 0;
         stoneColorP = 0;
         colA = 0;
         rowA = 0;
-        stoneColorA = 0;
-        this.goDataP = goDataP;
+        stoneColorA = 0;*/
         splitZahyoP(goDataP);
-        this.goDataA = goDataA;
         splitZahyoA(goDataA);
     }
 
@@ -44,26 +38,30 @@ public class GoDataParse {
         for (String data : split) {
             if (data.startsWith("AB::")) {       //ここで黒かどうかを判定
 
-                stoneColorP = BLACK;
+                //stoneColorP = BLACK;
                 start = data.indexOf("AB::");
                 if (start != -1) {
                     end = data.indexOf(start + 4);
                     if (end != -1) {
                         zahyo = data.substring(end);   //黒の初期配置座標の文字列を取得
                         splitZahyo = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                        initStoneP(splitZahyo, stoneColorP);
+                        for (String zahyoP : splitZahyo) {   //座標を1つずつ読み込むループ文
+                            initStoneP(zahyoP, BLACK);
+                        }
                     }
                 }
             } else if (data.startsWith("AW::")) {           //ここで白かどうかを判定
 
-                stoneColorP = WHITE;
+                //stoneColorP = WHITE;
                 start = data.indexOf("AW::");       //AWの位置を取得
                 if (start != -1) {
                     end = data.indexOf("@", start + 4);     //セミコロンの位置を取得
                     if (end != -1) {
                         zahyo = data.substring(end);   //セミコロン間の文字列を取得
                         splitZahyo = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                        initStoneP(splitZahyo, stoneColorP);
+                        for (String zahyoP : splitZahyo) {   //座標を1つずつ読み込むループ文
+                            initStoneP(zahyoP, WHITE);
+                        }
                     }
                 }
             }
@@ -80,54 +78,44 @@ public class GoDataParse {
         for (String data : split) {
             if (data.startsWith("B;")) {
 
-                stoneColorA = BLACK;
+                //stoneColorA = BLACK;
                 start = data.indexOf("B;");
                 if (start != -1) {
                     end = data.indexOf(start + 2);
                     if (end != -1) {
                         zahyo = data.substring(end);   //黒の初期配置座標の文字列を取得
                         answerList = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                        initStoneA(answerList, stoneColorA);
+                        for (String zahyoA : answerList) {   //座標を1つずつ読み込むループ文
+                            initStoneA(zahyoA, BLACK);
+                        }
                     }
                 }
             } else if (data.startsWith("W;")) {
 
-                stoneColorA = WHITE;
+                //stoneColorA = WHITE;
                 start = data.indexOf("W;");
                 if (start != -1) {
                     end = data.indexOf(start + 2);
                     if (end != -1) {
                         zahyo = data.substring(end);   //白の初期配置座標の文字列を取得
                         answerList = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
-                        initStoneA(answerList, stoneColorA);
+                        for (String zahyoA : answerList) {   //座標を1つずつ読み込むループ文
+                            initStoneA(zahyoA, WHITE);
+                        }
                     }
                 }
             }
         }
     }
 
-    private void initStoneP(String[] splitZahyoP, int stoneColorP) {
+    private void initStoneP(String zahyoP, int stoneColorP) {
 
-        for (String zahyoP : splitZahyoP) {   //座標を1つずつ読み込むループ文
-            colP = intChanger(zahyoP.charAt(0));
-            rowP = intChanger(zahyoP.charAt(1));
-        }
-        this.stoneColorP = stoneColorP;
-
-        Log.d(TAG, String.valueOf(colP));
-        Log.d(TAG, String.valueOf(rowP));
+        zahyo = new Zahyo(stoneColorP, intChanger(zahyoP.charAt(0)), intChanger(zahyoP.charAt(1)));
     }
 
-    private void initStoneA(String[] answerList, int stoneColorA) {
+    private void initStoneA(String zahyoA, int stoneColorA) {
 
-        for (String zahyoA : answerList) {   //座標を1つずつ読み込むループ文
-            colA = intChanger(zahyoA.charAt(0));
-            rowA = intChanger(zahyoA.charAt(1));
-        }
-        this.stoneColorA = stoneColorA;
-
-        Log.d(TAG, String.valueOf(colA));
-        Log.d(TAG, String.valueOf(rowA));
+        zahyo = new Zahyo(stoneColorA, intChanger(zahyoA.charAt(0)), intChanger(zahyoA.charAt(1)));
     }
 
     private int intChanger(char ch) {
@@ -200,7 +188,7 @@ public class GoDataParse {
         return i;
     }
 
-    public int getColP() {
+/*    public int getColP() {
         return colP;
     }
 
@@ -222,5 +210,5 @@ public class GoDataParse {
 
     public int getStoneColorA() {
         return stoneColorA;
-    }
+    }*/
 }

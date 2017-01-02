@@ -14,6 +14,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.oubeika.tsumegonomori.GameConst.TAG;
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SQLiteDatabase db;
     protected GoData goData;
+    private List<GoData> goDataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button button = (Button) findViewById(R.id.normal);
         button.setOnClickListener(this);
+
+        goDataList = new ArrayList<>();
     }
 
     @Override
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //ここでデータを受け取って不要な文字を除去する
     private GoData goDataSeparate(String goDataText) {
 
-        GoData goData = new GoData();
+        GoData goData2 = new GoData();
         int start;
         String allGoData;
         String[] split = (goDataText.split(",", 0));
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (start != -1) {
                     allGoData = data.substring(start);   //黒の初期配置座標の文字列を取得
                     Log.d(TAG, allGoData);
-                    goData.setGoDataP(allGoData);
+                    goData2.setGoDataP(allGoData);
                 }
             }
             if (data.startsWith("B;")) {
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (start != -1) {
                     allGoData = data.substring(start);   //黒の初期配置座標の文字列を取得
                     Log.d(TAG, allGoData);
-                    goData.setGoDataA(allGoData);
+                    goData2.setGoDataA(allGoData);
                 }
             }
             if (data.startsWith("QN::")) {
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (start != -1) {
                     String qNum = data.substring(start + 4);
                     Log.d(TAG, qNum);
-                    goData.setNumber(qNum);
+                    goData2.setNumber(qNum);
                 }
             }
             if (data.startsWith("LV::")) {
@@ -119,11 +124,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (start != -1) {
                     String level = data.substring(start + 4);
                     Log.d(TAG, level);
-                    goData.setLevel(level);
+                    goData2.setLevel(level);
                 }
             }
         }
-        return goData;
+        return goData2;
     }
 
     private String loadGoData() throws IOException {
