@@ -35,7 +35,7 @@ class ListAdapter extends ArrayAdapter<GoData> {
 
         if (goData != null) {
             q_num = (TextView) convertView.findViewById(R.id.q_num);
-            q_num.setText("Stage" + String.valueOf(goData.getNumber()));
+            q_num.setText("Stage" + goData.getNumber());
             level = (TextView) convertView.findViewById(R.id.level);
             level.setText(goData.getLevel());
         }

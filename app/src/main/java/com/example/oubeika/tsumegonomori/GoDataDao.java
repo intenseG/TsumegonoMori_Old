@@ -33,39 +33,50 @@ public class GoDataDao {
 
     public List<GoData> findAll() {
         List<GoData> list = new ArrayList<>();
-        // query
-        Cursor c = db.query(TABLE_NAME, COLUMNS, null, null, null, null, null, "5"); //1ステージごとに取得する問題数
+        Cursor c = null;
 
-        while (c.moveToNext()) {
+        try {
+            // query
+            c = db.query(TABLE_NAME, COLUMNS, null, null, null, null, null, null); //1ステージごとに取得する問題数
+
+            while (c.moveToNext()) {
                 GoData goData = new GoData();
                 goData.setNumber(c.getString(c.getColumnIndex(COL_NUMBER)));
                 goData.setLevel(c.getString(c.getColumnIndex(COL_LEVEL)));
                 goData.setGoDataP(c.getString(c.getColumnIndex(COL_GODATA_P)));
                 goData.setGoDataA(c.getString(c.getColumnIndex(COL_GODATA_A)));
                 list.add(goData);
+            }
+            // cursorのclose
+            c.close();
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
-
-        // cursorのclose
-        c.close();
-
         return list;
     }
 
     public GoData find(String num) {
-        Cursor c = db.query(TABLE_NAME, COLUMNS, COL_NUMBER + " = ?",
-                new String[] { num }, null, null, COL_NUMBER);
         GoData goData = null;
+        Cursor c;
 
-        if (c.moveToFirst()) {
-            goData = new GoData();
-            goData.setNumber(c.getString(c.getColumnIndex(COL_NUMBER)));
-            goData.setLevel(c.getString(c.getColumnIndex(COL_LEVEL)));
-            goData.setGoDataP(c.getString(c.getColumnIndex(COL_GODATA_P)));
-            goData.setGoDataA(c.getString(c.getColumnIndex(COL_GODATA_A)));
+        try {
+            c = db.query(TABLE_NAME, COLUMNS, COL_NUMBER + " = ?",
+                    new String[]{num}, null, null, COL_NUMBER); //COL_NUMBER or null
+
+            if (c.moveToFirst()) {
+                goData = new GoData();
+                goData.setNumber(c.getString(c.getColumnIndex(COL_NUMBER)));
+                goData.setLevel(c.getString(c.getColumnIndex(COL_LEVEL)));
+                goData.setGoDataP(c.getString(c.getColumnIndex(COL_GODATA_P)));
+                goData.setGoDataA(c.getString(c.getColumnIndex(COL_GODATA_A)));
+            }
+            // cursorのclose
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        // cursorのclose
-        c.close();
-
         return goData;
     }
 

@@ -1,8 +1,10 @@
 package com.example.oubeika.tsumegonomori;
 
+import android.util.Log;
+
 public class Board {
 
-    public static final int BOARD_SIZE = 13;
+    public static final int BOARD_SIZE = 19;
     private int rawBoard[][] = new int[BOARD_SIZE + 2][BOARD_SIZE + 2];
 
     private int turn;

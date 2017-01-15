@@ -15,21 +15,20 @@
             android:id="@+id/q_num"
             android:textSize="36sp"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:fontFamily="cursive"/>
+            android:layout_height="wrap_content"/>
+           <!-- android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="cursive"-->
 
         <TextView
             android:id="@+id/level"
-            android:textSize="24sp"
+            android:textSize="28sp"
             android:textColor="@android:color/black"
             android:layout_marginLeft="24dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:fontFamily="cursive"/>
+            android:layout_height="wrap_content"/>
+        <!--    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="cursive"-->
 
     </LinearLayout>
 

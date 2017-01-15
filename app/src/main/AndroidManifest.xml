@@ -5,9 +5,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
-    <application>
-
-        <activity
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+    <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
@@ -22,17 +24,17 @@
             android:label="@string/stage_list"
             android:theme="@style/AppTheme"
             android:parentActivityName=".MainActivity"/>
-        <meta-data
+     <!--   <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.oubeika.tsumegonomori.MainActivity"/>
+            android:value="com.example.oubeika.tsumegonomori.MainActivity"-->/>
         <activity
             android:name=".Problem"
             android:label="@string/problem"
             android:theme="@style/AppTheme"
             android:parentActivityName=".StagesList"/>
-        <meta-data
+       <!-- <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.oubeika.tsumegonomori.StagesList"/>
+            android:value="com.example.oubeika.tsumegonomori.StagesList"-->/>
 
     </application>
 

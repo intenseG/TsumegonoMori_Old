@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SQLiteDatabase db;
     protected GoData goData;
-    private List<GoData> goDataList;
+    private List<GoData> goDataList = new ArrayList<>();
+    private boolean isLoadGoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button button = (Button) findViewById(R.id.normal);
         button.setOnClickListener(this);
-
-        goDataList = new ArrayList<>();
     }
 
     @Override
@@ -60,10 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     throw new Exception("could not save GoData");
                 }
             }
-            Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
+            if (!isLoadGoData) {
+                Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
+            }
+            isLoadGoData = true;
 
-            // 保存に成功したらアクティビティを閉じる
-            //finish();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "詰碁データの読み込みに失敗しました。", Toast.LENGTH_LONG).show();
@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for (String data : split) {
             if (data.startsWith("AB::")) {       //ここで黒かどうかを判定
-
                 start = data.indexOf("AB::");
                 if (start != -1) {
                     allGoData = data.substring(start);   //黒の初期配置座標の文字列を取得
@@ -101,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             if (data.startsWith("B;")) {
-
                 start = data.indexOf("B;");
                 if (start != -1) {
                     allGoData = data.substring(start);   //黒の初期配置座標の文字列を取得
@@ -110,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             if (data.startsWith("QN::")) {
-
                 start = data.indexOf("QN::");
                 if (start != -1) {
                     String qNum = data.substring(start + 4);
@@ -119,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             if (data.startsWith("LV::")) {
-
                 start = data.indexOf("LV::");
                 if (start != -1) {
                     String level = data.substring(start + 4);

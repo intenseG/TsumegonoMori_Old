@@ -1,19 +1,27 @@
 package com.example.oubeika.tsumegonomori;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import static com.example.oubeika.tsumegonomori.GameConst.*;
 
 //問題出題画面を表示するクラス
 public class Problem extends AppCompatActivity implements View.OnClickListener {
+
+    private SQLiteDatabase db;
 
     private TextView q_num, level_text, teban;
     private ImageView goban_13;
@@ -21,7 +29,6 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
     private ImageButton undo, redo, reload, previous, next;
 
     private Board board;
-    private Zahyo zahyo;
     private GoDataParse gdp;
 
     private int[] stoneImage = {
@@ -34,10 +41,13 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.problem_screen);
 
+        // データベース関連
+        DBHelper dbHelper = new DBHelper(this);
+        db = dbHelper.getWritableDatabase();
+
         setView();
 
         board = new Board();
-        zahyo = new Zahyo();
 
         Intent intent = getIntent();
         String number = intent.getStringExtra("number");
@@ -48,23 +58,23 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         q_num.setText("Q" + number);
         level_text.setText(level);
 
+        Bitmap src = BitmapFactory.decodeResource(getResources(), R.drawable.goban_13);
+        Bitmap dst = ImageUtils.resizeBitmapToDisplaySize(this, src);
+
+        goban_13.setScaleType(ImageView.ScaleType.CENTER);
+        goban_13.setImageBitmap(dst);
+
         gdp = new GoDataParse(goDataP, goDataA);
-
-        Log.d("colP", String.valueOf(zahyo.getColP()));
-        Log.d("rowP", String.valueOf(zahyo.getRowP()));
-        Log.d("stoneColorP", String.valueOf(zahyo.getStoneColorP()));
-
-        board.initStone(zahyo.getStoneColorP(), zahyo.getColP(), zahyo.getRowP());
 
         int[][] ban = board.getRawBoard();
 
         for (int col = 0; col < BOARD_SIZE; col++) {
             for (int row = 0; row < BOARD_SIZE; row++) {
                 switch (ban[col][row]) {
-                    case BLACK:
+                    case BLACK: //黒石の描画
                         stone.setImageResource(stoneImage[0]);
                         break;
-                    case WHITE:
+                    case WHITE: //白石の描画
                         stone.setImageResource(stoneImage[1]);
                         break;
                 }
@@ -116,33 +126,6 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
     }
 }
 
-
-
-// addStone();
-/*        goData = new GoData();
-
-        int col = goData.getColP();
-        int row = goData.getRowP();
-        int stoneColor = goData.getStoneColorP();
-
-        Goban goban = new Goban();
-        goban.update(col, row, stoneColor);
-
-        //碁盤の描画
-        goban_13.setImageBitmap(goban13);
-
-        //碁石の描画
-        int[][] ban = goban.getBoard();
-        for(int c = 0; c < LINE; c++) {
-            for (int r = 0; r < LINE; r++) {
-                switch (ban[r][c]){
-                    case 1 :
-                        stone_b.setImageBitmap(stoneB);
-                    case 2 :
-                        stone_w.setImageBitmap(stoneW);
-                }
-            }
-        }*/
 
    /* private void addStone() {
 

@@ -8,98 +8,99 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:layout_height="0dip"
+        android:layout_weight="1.5"
+        android:padding="8dp"
+        android:background="#962e8c75"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="30dip"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/black"
             android:id="@+id/q_num"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="30dip"
             android:text="@string/first_b"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/black"
             android:id="@+id/teban"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="30dip"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:background="@color/colorPrimaryDark"
+            android:textColor="@android:color/black"
             android:id="@+id/level_text"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
+        android:layout_weight="10"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="390dp"
-            android:background="@drawable/goban_13"
-            android:id="@+id/goban_13"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stone"/>
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/goban_13"/>
+
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
+        android:layout_height="0dip"
+        android:layout_weight="2"
+        android:background="#964a935a"
         android:orientation="horizontal">
 
         <ImageButton
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="false"
             android:id="@+id/button_undo"
             android:background="@drawable/button_undo"/>
 
         <ImageButton
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/button_redo"
             android:background="@drawable/button_redo"/>
 
         <ImageButton
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/button_reload"
             android:background="@drawable/button_reload"/>
 
         <ImageButton
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="false"
             android:id="@+id/button_skip_previous"
             android:background="@drawable/button_skip_previous"/>
 
         <ImageButton
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:clickable="false"
             android:id="@+id/button_skip_next"
             android:background="@drawable/button_skip_next"/>
 
