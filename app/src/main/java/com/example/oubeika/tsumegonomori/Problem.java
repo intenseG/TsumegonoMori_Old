@@ -7,29 +7,29 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 
-import static com.example.oubeika.tsumegonomori.GameConst.*;
+import static com.example.oubeika.tsumegonomori.Board.BOARD_SIZE;
+import static com.example.oubeika.tsumegonomori.Disc.BLACK;
+import static com.example.oubeika.tsumegonomori.Disc.WHITE;
 
 //問題出題画面を表示するクラス
 public class Problem extends AppCompatActivity implements View.OnClickListener {
 
-    private SQLiteDatabase db;
+    private int start;
 
-    private TextView q_num, level_text, teban;
+    private SQLiteDatabase db;
+    private Board board;
+
+    private TextView q_num, level_text;
     private ImageView goban_13;
     private ImageView stone;
     private ImageButton undo, redo, reload, previous, next;
-
-    private Board board;
-    private GoDataParse gdp;
 
     private int[] stoneImage = {
             R.drawable.stone1,
@@ -48,6 +48,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         setView();
 
         board = new Board();
+        //GoDataParse gdp = new GoDataParse();
 
         Intent intent = getIntent();
         String number = intent.getStringExtra("number");
@@ -64,7 +65,8 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         goban_13.setScaleType(ImageView.ScaleType.CENTER);
         goban_13.setImageBitmap(dst);
 
-        gdp = new GoDataParse(goDataP, goDataA);
+        splitZahyoP(goDataP); // 石の初期配置データを分解したのち配列に格納
+        splitZahyoA(goDataA); // 解答データを分解したのち配列に格納
 
         int[][] ban = board.getRawBoard();
 
@@ -111,7 +113,6 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         goban_13 = (ImageView) findViewById(R.id.goban_13);
         stone = (ImageView) findViewById(R.id.stone);
         q_num = (TextView) findViewById(R.id.q_num);
-        teban = (TextView) findViewById(R.id.teban);
         level_text = (TextView) findViewById(R.id.level_text);
         undo = (ImageButton) findViewById(R.id.button_undo);
         undo.setOnClickListener(this);
@@ -124,36 +125,76 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         next = (ImageButton) findViewById(R.id.button_skip_next);
         next.setOnClickListener(this);
     }
-}
 
+    public void splitZahyoP(String goDataP) {
 
-   /* private void addStone() {
+        String zahyo;
+        String splitZahyo[];
 
-        int colP = goData.getColP();
-        int rowP = goData.getRowP();
-        int stoneColorP = goData.getStoneColorP();
+        String[] split = (goDataP.split("@", 0));
 
-        Bitmap goban13 = BitmapFactory.decodeResource(getResources(), R.drawable.goban_13);
-        Bitmap stoneB = BitmapFactory.decodeResource(getResources(), R.drawable.stone1);
-        Bitmap stoneW = BitmapFactory.decodeResource(getResources(), R.drawable.stone2);
+        for (String data : split) {
+            if (data.startsWith("AB::")) {       //ここで黒かどうかを判定
 
-        Goban goban = new Goban();
-        // goban.update(colP, rowP, stoneColorP);
+                start = data.indexOf("AB::");
+                if (start != -1) {
+                    zahyo = data.substring(start + 4);   //黒の初期配置座標の文字列を取得
+                    splitZahyo = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                    for (String zahyoP : splitZahyo) {   //座標を1つずつ読み込むループ文
+                        board.initStone(BLACK, intChanger(zahyoP.charAt(0)), intChanger(zahyoP.charAt(1)));
+                    }
+                }
+            } else if (data.startsWith("AW::")) {           //ここで白かどうかを判定
 
-        //碁盤の描画
-        goban13.setDensity(DisplayMetrics.DENSITY_DEFAULT);
-        goban_13.setImageBitmap(goban13);
-
-        //碁石の描画
-        int[][] ban = goban.getBoard();
-        for (int c = 0; c < LINE; c++) {
-            for (int r = 0; r < LINE; r++) {
-                switch (ban[c][r]) {
-                    case 1:
-                        stone_b.setImageBitmap(stoneB);
-                    case 2:
-                        stone_w.setImageBitmap(stoneW);
+                start = data.indexOf("AW::");       //AWの位置を取得
+                if (start != -1) {
+                    zahyo = data.substring(start + 4);   //セミコロン間の文字列を取得
+                    splitZahyo = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                    for (String zahyoP : splitZahyo) {   //座標を1つずつ読み込むループ文
+                        board.initStone(WHITE, intChanger(zahyoP.charAt(0)), intChanger(zahyoP.charAt(1)));
+                    }
                 }
             }
         }
-    }*/
+    }
+
+    public void splitZahyoA(String goDataA) {
+
+        String zahyo;
+        String[] answerList;
+
+        String[] split = (goDataA.split("@", 0));
+
+        for (String data : split) {
+            if (data.startsWith("B;")) {
+
+                start = data.indexOf("B;");
+                if (start != -1) {
+                    zahyo = data.substring(start + 2);   //黒の初期配置座標の文字列を取得
+                    answerList = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                    for (String zahyoA : answerList) {   //座標を1つずつ読み込むループ文
+                        board.initStone(BLACK,intChanger(zahyoA.charAt(0)), intChanger(zahyoA.charAt(1)));
+                    }
+                }
+            } else if (data.startsWith("W;")) {
+
+                start = data.indexOf("W;");
+                if (start != -1) {
+                    zahyo = data.substring(start + 2);   //白の初期配置座標の文字列を取得
+                    answerList = (zahyo.split(";", 0));    //";"で区切ってString型配列に要素を入れる
+                    for (String zahyoA : answerList) {   //座標を1つずつ読み込むループ文
+                        board.initStone(WHITE, intChanger(zahyoA.charAt(0)), intChanger(zahyoA.charAt(1)));
+                    }
+                }
+            }
+        }
+    }
+
+    private int intChanger(char c) {
+        int i;
+        i = (int)c - (int)'a'; // +1すれば座標が1から始まる
+        Log.d("intTest", String.valueOf(i));
+
+        return i;
+    }
+}

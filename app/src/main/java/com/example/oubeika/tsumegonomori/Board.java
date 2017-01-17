@@ -1,6 +1,6 @@
 package com.example.oubeika.tsumegonomori;
 
-import android.util.Log;
+import java.util.ArrayList;
 
 public class Board {
 
@@ -42,10 +42,7 @@ public class Board {
 
     private boolean isEmpty(int col, int row) {
 
-        if (rawBoard[col][row] != Disc.EMPTY) {
-            return false;
-        }
-        return true;
+        return rawBoard[col][row] == Disc.EMPTY;
     }
 
     public int[][] getRawBoard() {

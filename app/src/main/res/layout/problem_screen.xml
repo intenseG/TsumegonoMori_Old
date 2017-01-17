@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1.5"
+        android:layout_weight="0.7"
         android:padding="8dp"
         android:background="#962e8c75"
         android:orientation="horizontal">
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
-            android:textSize="32sp"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:id="@+id/q_num"/>
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
             android:text="@string/first_b"
-            android:textSize="32sp"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:id="@+id/teban"/>
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
-            android:textSize="32sp"
+            android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:id="@+id/level_text"/>
@@ -47,7 +47,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="10"
+        android:layout_weight="5"
         android:orientation="vertical">
 
         <ImageView
@@ -65,7 +65,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:background="#964a935a"
         android:orientation="horizontal">
 

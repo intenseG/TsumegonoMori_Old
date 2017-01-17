@@ -1,7 +1,5 @@
 package com.example.oubeika.tsumegonomori;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import static com.example.oubeika.tsumegonomori.Disc.*;
@@ -12,13 +10,7 @@ public class GoDataParse {
 
     private int start;
 
-    public GoDataParse(String goDataP, String goDataA) {
-
-        splitZahyoP(goDataP);
-        splitZahyoA(goDataA);
-    }
-
-    private void splitZahyoP(String goDataP) {
+    public void splitZahyoP(String goDataP) {
 
         String zahyo;
         String splitZahyo[];
@@ -50,7 +42,7 @@ public class GoDataParse {
         }
     }
 
-    private void splitZahyoA(String goDataA) {
+    public void splitZahyoA(String goDataA) {
 
         String zahyo;
         String[] answerList;

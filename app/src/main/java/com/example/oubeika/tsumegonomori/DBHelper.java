@@ -8,25 +8,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "godata.db";
     private static final int DB_VER = 1;
-    static final String TABLE_NAME = "goData";
+    public static final String CREATE_SQL = "create table "
+            + GoDataDao.TABLE_NAME + " ("
+            + GoDataDao.COL_ID + " integer primary key autoincrement,"
+            + GoDataDao.COL_NUMBER + " text not null,"
+            + GoDataDao.COL_LEVEL + " text not null,"
+            + GoDataDao.COL_GODATA_P + " text not null,"
+            + GoDataDao.COL_GODATA_A + " text not null"
+            + ");";
 
-    static final String COL_ID = "id";
-    static final String COL_NUMBER = "number";
-    static final String COL_LEVEL = "level";
-    static final String COL_GODATA_P = "goDataP";
-    static final String COL_GODATA_A = "goDataA";
-
-    //private Context mContext;
-
-    public DBHelper(Context context) {
-        super(context, DB_NAME, null, DB_VER);
-       //mContext = context;
+    public DBHelper(Context c) {
+        super(c, DB_NAME, null, DB_VER);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL(GoDataDao.CREATE_SQL);
+        db.execSQL(CREATE_SQL);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package com.example.oubeika.tsumegonomori;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,13 +25,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private SQLiteDatabase db;
     protected GoData goData;
-    private List<GoData> goDataList = new ArrayList<>();
+    //private List<GoData> goDataList = new ArrayList<>();
     private boolean isLoadGoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        isLoadGoData = false;
 
         Button button = (Button) findViewById(R.id.normal);
         button.setOnClickListener(this);
@@ -61,8 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             if (!isLoadGoData) {
                 Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
+                isLoadGoData = true;
             }
-            isLoadGoData = true;
 
         } catch (Exception e) {
             e.printStackTrace();
