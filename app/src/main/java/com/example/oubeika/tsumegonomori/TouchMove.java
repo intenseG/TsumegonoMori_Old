@@ -48,12 +48,10 @@ public class TouchMove extends AppCompatActivity{
         int difX = (int) (x2 - x);
         int difY = (int) (y2 - y);
 
-        if (x >= SPACE / 2) {
-            zahyo[x][y] = 1;
-            stone.setImageBitmap(stoneState[zahyo[x][y]]);
-            stone.setX(x * SPACE + difX);
-            stone.setY(y * SPACE + difY);
-        }
+        zahyo[x][y] = 1;
+        stone.setImageBitmap(stoneState[zahyo[x][y]]);
+        stone.setX(x * SPACE + difX);
+        stone.setY(y * SPACE + difY);
 
         return true;
     }

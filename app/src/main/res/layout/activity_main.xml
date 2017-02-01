@@ -7,44 +7,70 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/home_background"
-    tools:context="com.example.oubeika.tsumegonomori.MainActivity">
+    tools:context="com.example.oubeika.tsumegonomori.MainActivity"
+    android:weightSum="7">
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:src="@drawable/logo"
         android:layout_gravity="center"
         android:layout_marginTop="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_weight="4">
 
         <Button
-            android:layout_width="140dp"
-            android:layout_height="60dp"
+            android:layout_width="175dp"
+            android:layout_height="75dp"
             android:id="@+id/easy"
-            android:layout_marginTop="20dp"
             android:background="@drawable/button_easy"/>
 
         <Button
-            android:layout_width="140dp"
-            android:layout_height="60dp"
+            android:layout_width="175dp"
+            android:layout_height="75dp"
             android:id="@+id/normal"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_normal"/>
 
         <Button
-            android:layout_width="140dp"
-            android:layout_height="60dp"
+            android:layout_width="175dp"
+            android:layout_height="75dp"
             android:id="@+id/hard"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_hard"/>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_margin="28dp">
+
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom|start"
+            android:background="@drawable/button_setting"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
+
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/button_help"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

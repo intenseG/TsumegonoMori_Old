@@ -2,8 +2,8 @@ package com.example.oubeika.tsumegonomori;
 
 class Point {
 
-    private int x;
-    private int y;
+    public int x;
+    public int y;
 
     public Point() {
         this(0, 0);

@@ -7,13 +7,13 @@ public class Board {
     public static final int BOARD_SIZE = 19;
     private int rawBoard[][] = new int[BOARD_SIZE + 2][BOARD_SIZE + 2];
 
-    private int turn;
     private int currentTurn;
+    private int currentColor;
 
     public Board() {
         initBoard();
-        turn = 0;
         currentTurn = 0;
+        currentColor = 0;
     }
 
     private void initBoard() {
@@ -43,6 +43,17 @@ public class Board {
     private boolean isEmpty(int col, int row) {
 
         return rawBoard[col][row] == Disc.EMPTY;
+    }
+
+    public void putStone(Point point, int[][][] movableDir) {
+
+        int x, y;
+        int dir = movableDir[currentTurn][point.x][point.y];
+
+        ArrayList<Disc> update = new ArrayList<>();
+
+        rawBoard[point.x][point.y] = currentColor;
+        update.add(new Disc(point.x, point.y, currentColor));
     }
 
     public int[][] getRawBoard() {

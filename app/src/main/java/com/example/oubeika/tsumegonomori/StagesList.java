@@ -48,6 +48,7 @@ public class StagesList extends ListActivity implements AdapterView.OnItemClickL
         intent.putExtra("level", data.getLevel());
         intent.putExtra("goDataP", data.getGoDataP());
         intent.putExtra("goDataA", data.getGoDataA());
+        intent.putExtra("maxTurn", 3);
 
         Log.d("number", data.getNumber());
         Log.d("level", data.getLevel());

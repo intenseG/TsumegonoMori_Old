@@ -18,13 +18,15 @@ import static com.example.oubeika.tsumegonomori.Board.BOARD_SIZE;
 import static com.example.oubeika.tsumegonomori.Disc.BLACK;
 import static com.example.oubeika.tsumegonomori.Disc.WHITE;
 
-//問題出題画面を表示するクラス
+//継承するのはAppCompatActivityではなくViewを継承してるクラスにしたほうがいいかも？
 public class Problem extends AppCompatActivity implements View.OnClickListener {
 
     private int start;
+    private int movableDir[][][];
 
     private SQLiteDatabase db;
     private Board board;
+    private GoBoardView goBoardView;
 
     private TextView q_num, level_text;
     private ImageView goban_13;
@@ -48,13 +50,15 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         setView();
 
         board = new Board();
-        //GoDataParse gdp = new GoDataParse();
 
         Intent intent = getIntent();
         String number = intent.getStringExtra("number");
         String level = intent.getStringExtra("level");
         String goDataP = intent.getStringExtra("goDataP");
         String goDataA = intent.getStringExtra("goDataA");
+        int maxTurn = intent.getIntExtra("maxTurn", 0);
+
+        movableDir = new int[maxTurn][BOARD_SIZE + 2][BOARD_SIZE + 2];
 
         q_num.setText("Q" + number);
         level_text.setText(level);
@@ -68,22 +72,8 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
         splitZahyoP(goDataP); // 石の初期配置データを分解したのち配列に格納
         splitZahyoA(goDataA); // 解答データを分解したのち配列に格納
 
-        int[][] ban = board.getRawBoard();
-
-        for (int col = 0; col < BOARD_SIZE; col++) {
-            for (int row = 0; row < BOARD_SIZE; row++) {
-                switch (ban[col][row]) {
-                    case BLACK: //黒石の描画
-                        stone.setImageResource(stoneImage[0]);
-                        break;
-                    case WHITE: //白石の描画
-                        stone.setImageResource(stoneImage[1]);
-                        break;
-                }
-            }
-        }
     }
-
+    
     @Override
     public void onClick(View view) {
 
@@ -111,7 +101,7 @@ public class Problem extends AppCompatActivity implements View.OnClickListener {
     private void setView() {
         // UI部品の設定
         goban_13 = (ImageView) findViewById(R.id.goban_13);
-        stone = (ImageView) findViewById(R.id.stone);
+        //stone = (ImageView) findViewById(R.id.stone);
         q_num = (TextView) findViewById(R.id.q_num);
         level_text = (TextView) findViewById(R.id.level_text);
         undo = (ImageButton) findViewById(R.id.button_undo);
