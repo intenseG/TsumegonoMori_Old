@@ -34,7 +34,7 @@ public class ProblemList extends AppCompatActivity {
 
         items = new ArrayList<>();
 
-        String[] columns = {DBAdapter.COL_ID, DBAdapter.COL_LEVEL};
+        String[] columns = {GoDataDao.COL_NUMBER, GoDataDao.COL_LEVEL};
 
         Cursor c = dbAdapter.getDB(columns);
 
@@ -126,14 +126,14 @@ public class ProblemList extends AppCompatActivity {
 
    /* private void loadGoDataList() {
 
-        db = new DBHelper(this).getWritableDatabase();
-        Cursor c = db.query(DBHelper.TABLE_NAME, null, null, null, null, null, null);
+        db = new TsumegoDBHelper(this).getWritableDatabase();
+        Cursor c = db.query(TsumegoDBHelper.TABLE_NAME, null, null, null, null, null, null);
         c.moveToFirst();
 
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 android.R.layout.simple_expandable_list_item_2,
                 c,
-                new String[] {DBHelper.COL_ID, DBHelper.COL_LEVEL},
+                new String[] {TsumegoDBHelper.COL_ID, TsumegoDBHelper.COL_LEVEL},
                 new int[] {R.id.q_num, R.id.level},
                 0);
 

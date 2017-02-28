@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StagesList extends ListActivity implements AdapterView.OnItemClickListener {
@@ -27,8 +26,8 @@ public class StagesList extends ListActivity implements AdapterView.OnItemClickL
         stage_list.setOnItemClickListener(this);
 
         // Database接続
-        DBHelper dbHelper = new DBHelper(this);
-        db = dbHelper.getWritableDatabase();
+        TsumegoDBHelper tsumegoDBHelper = new TsumegoDBHelper(this);
+        db = tsumegoDBHelper.getWritableDatabase(); // getReadableDatabaseのほうが良さそう
         GoDataDao goDataDao = new GoDataDao(db);
 
         goDataList = goDataDao.findAll();
@@ -43,19 +42,18 @@ public class StagesList extends ListActivity implements AdapterView.OnItemClickL
         ListView listView = (ListView) parent;
 
         GoData data = (GoData) listView.getItemAtPosition(pos);
-        Intent intent = new Intent(StagesList.this, Problem.class);
+        Intent intent = new Intent(StagesList.this, ProblemTest.class);
         intent.putExtra("number", data.getNumber());
         intent.putExtra("level", data.getLevel());
         intent.putExtra("goDataP", data.getGoDataP());
         intent.putExtra("goDataA", data.getGoDataA());
-        intent.putExtra("maxTurn", 3);
 
         Log.d("number", data.getNumber());
         Log.d("level", data.getLevel());
         Log.d("goDataP", data.getGoDataP());
         Log.d("goDataA", data.getGoDataA());
 
-   /*     Cursor c = (Cursor) listView.getItemAtPosition(pos);
+  /*      Cursor c = (Cursor) listView.getItemAtPosition(pos);
         Intent intent = new Intent(StagesList.this, Problem.class);
         intent.putExtra("number", c.getString(c.getColumnIndex(GoDataDao.COL_NUMBER)));
         intent.putExtra("level", c.getString(c.getColumnIndex(GoDataDao.COL_LEVEL)));

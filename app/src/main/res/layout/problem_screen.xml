@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/easylist_background"
     android:orientation="vertical"
-    android:weightSum="7">
+    android:weightSum="9">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,11 +16,21 @@
         android:padding="8dp">
 
         <TextView
-            android:id="@+id/q_num"
+            android:id="@+id/level_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dip"
+            android:textColor="@android:color/black"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/q_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dip"
             android:textColor="@android:color/black"
             android:textSize="40sp"
             android:textStyle="bold" />
@@ -36,40 +46,46 @@
             android:textSize="40sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/level_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="30dip"
-            android:textColor="@android:color/black"
-            android:textSize="40sp"
-            android:textStyle="bold" />
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="5"
+        android:layout_weight="7"
+
         android:orientation="vertical">
-
-      <!--  <com.example.oubeika.tsumegonomori.GoBoardView
-            android:id="@+id/go_board"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </com.example.oubeika.tsumegonomori.GoBoardView>-->
 
         <!--<ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/stone"/>-->
 
-        <ImageView
+<!--        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/goban_13" />
+            android:layout_height="0dp"
+            android:layout_weight="30"
+            android:id="@+id/goban_13" />-->
+
+        <com.example.oubeika.tsumegonomori.GoBoardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="30" />
+
+        <Button
+            android:id="@+id/put_stone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginRight="92dp"
+            android:layout_marginEnd="92dp"
+            android:layout_marginLeft="92dp"
+            android:layout_marginStart="92dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/put_stone"
+            android:textSize="40sp"/>
 
     </LinearLayout>
 

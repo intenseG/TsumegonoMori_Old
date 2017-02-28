@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBHelper extends SQLiteOpenHelper {
+public class TsumegoDBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "godata.db";
     private static final int DB_VER = 1;
@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + GoDataDao.COL_GODATA_A + " text not null"
             + ");";
 
-    public DBHelper(Context c) {
+    public TsumegoDBHelper(Context c) {
         super(c, DB_NAME, null, DB_VER);
     }
 

@@ -3,6 +3,7 @@ package com.example.oubeika.tsumegonomori;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,6 @@ public class GoDataDao {
     public static final String COL_GODATA_P = "goDataP";
     public static final String COL_GODATA_A = "goDataA";
     public static final String[] COLUMNS = {COL_NUMBER, COL_LEVEL, COL_GODATA_P, COL_GODATA_A};
-    public static final String CREATE_SQL = "create table "
-            + TABLE_NAME + " ("
-            + COL_ID + " integer primary key autoincrement,"
-            + COL_NUMBER + " text not null,"
-            + COL_LEVEL + " text not null,"
-            + COL_GODATA_P + " text not null,"
-            + COL_GODATA_A + " text not null"
-            + ");";
 
     private SQLiteDatabase db;
 
@@ -74,6 +67,7 @@ public class GoDataDao {
         if (!goData.validate()) {
             return -1;
         }
+
         ContentValues values = new ContentValues();
         values.put(COL_LEVEL, goData.getLevel());
         values.put(COL_GODATA_P, goData.getGoDataP());

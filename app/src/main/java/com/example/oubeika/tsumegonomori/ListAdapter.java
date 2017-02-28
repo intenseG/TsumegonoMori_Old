@@ -15,7 +15,6 @@ class ListAdapter extends ArrayAdapter<GoData> {
     private LayoutInflater inflater;
     private TextView q_num;
     private TextView level;
-    //private Context context = null;
     private List<GoData> items = null;
 
     public ListAdapter(Context context, List<GoData> items) {

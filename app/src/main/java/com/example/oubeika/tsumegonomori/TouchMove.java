@@ -26,8 +26,8 @@ public class TouchMove extends AppCompatActivity{
 
         stoneState = new Bitmap[2];
         stoneState[0] = null;
-        stoneState[1] = BitmapFactory.decodeResource(res, R.drawable.stone1);
-        stoneState[2] = BitmapFactory.decodeResource(res, R.drawable.stone2);
+        stoneState[1] = BitmapFactory.decodeResource(res, R.drawable.stone_b);
+        stoneState[2] = BitmapFactory.decodeResource(res, R.drawable.stone_w);
 
         goban = (ImageView) findViewById(R.id.goban);
         stone = (ImageView) findViewById(R.id.stone);

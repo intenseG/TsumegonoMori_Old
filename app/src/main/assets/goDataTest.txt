@@ -1,0 +1,7 @@
+(;AB[ps][pr][qr][rr][sr]
+AW[os][or][oq][qq][pq][rq][sq],
+;B[rs],;QN[1],;LV[easy])
+/
+(;AB[qs][qr][rr][rq][sq]
+AW[sp][qp][rp][qq][pq][pr][ps]
+;B[ss],;QN[2],;LV[easy])

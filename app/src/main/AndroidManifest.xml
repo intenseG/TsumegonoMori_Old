@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.oubeika.tsumegonomori">
 
+    <supports-screens android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true"/>
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -28,7 +33,7 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.example.oubeika.tsumegonomori.MainActivity"-->/>
         <activity
-            android:name=".Problem"
+            android:name=".ProblemTest"
             android:label="@string/problem"
             android:theme="@style/AppTheme"
             android:parentActivityName=".StagesList"/>

@@ -8,7 +8,7 @@ public class GoDataParse {
 
     private Board board = new Board();
 
-    private int start;
+    private int start = 0;
 
     public void splitZahyoP(String goDataP) {
 

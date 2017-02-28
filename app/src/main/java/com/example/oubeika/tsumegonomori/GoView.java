@@ -8,12 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
-
-import static com.example.oubeika.tsumegonomori.GameConst.BOARD_SIZE;
 
 public class GoView extends View {
 
@@ -36,8 +32,8 @@ public class GoView extends View {
         super(context);
         Resources res = this.getContext().getResources();
         easy_background = BitmapFactory.decodeResource(res, R.drawable.easylist_background);
-        stone_b = BitmapFactory.decodeResource(res, R.drawable.stone1);
-        stone_w = BitmapFactory.decodeResource(res, R.drawable.stone2);
+        stone_b = BitmapFactory.decodeResource(res, R.drawable.stone_b);
+        stone_w = BitmapFactory.decodeResource(res, R.drawable.stone_w);
         goban_13 = BitmapFactory.decodeResource(res, R.drawable.goban_13);
     }
 

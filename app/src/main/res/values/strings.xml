@@ -12,5 +12,7 @@
     <string name="stage">Stage</string>
     <string name="stage_list">ステージリスト</string>
     <string name="problem">問題</string>
+    <string name="put_stone">着手</string>
+
 
 </resources>

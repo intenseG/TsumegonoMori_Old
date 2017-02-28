@@ -1,6 +1,7 @@
 package com.example.oubeika.tsumegonomori;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -23,49 +24,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected GoData goData;
     private boolean isLoadGoData;
 
+    private SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        isLoadGoData = false;
-
         Button button = (Button) findViewById(R.id.normal);
         button.setOnClickListener(this);
+
+        pref = getSharedPreferences("pref", MODE_PRIVATE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        //Database接続
-        DBHelper dbHelper = new DBHelper(this);
-        db = dbHelper.getWritableDatabase();
-        GoDataDao goDataDao = new GoDataDao(db);
-
+        // 復元・再開処理
         try {
-            String goDataText = loadGoData();
-            String[] splitGoData = goDataText.split("/", 0);
-            for (String newGoData : splitGoData) {
-                goData = goDataSeparate(newGoData);
+            boolean pref_isLoadGoData = pref.getBoolean("isLoadGoData", false);
+            if (!pref_isLoadGoData) {
+                // Database接続
+                TsumegoDBHelper tsumegoDBHelper = new TsumegoDBHelper(this);
+                db = tsumegoDBHelper.getWritableDatabase();
+                GoDataDao goDataDao = new GoDataDao(db);
 
-                Log.d("GoData", goData.getNumber());
-                Log.d("GoData", goData.getLevel());
-                Log.d("GoData", goData.getGoDataP());
-                Log.d("GoData", goData.getGoDataA());
+                String goDataText = loadGoData();
+                String[] splitGoData = goDataText.split("/", 0);
+                for (String newGoData : splitGoData) {
+                    goData = goDataSeparate(newGoData.replaceAll("\\n\\r\\t", ""));
 
-                if (goDataDao.save(goData) < 0) {
-                    throw new Exception("could not save GoData");
+                    if (goDataDao.save(goData) > 0) {
+                        Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
+                        isLoadGoData = true;
+                    } else {
+                        throw new Exception("詰碁データの読み込みに失敗しました");
+                    }
                 }
             }
-            if (!isLoadGoData) {
-                Toast.makeText(this, "詰碁データの読み込みが完了しました！", Toast.LENGTH_LONG).show();
-                isLoadGoData = true;
-            }
+            // 詰碁データが読み込まれたどうかを真偽値としてプリファレンスに保存
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("isLoadGoData", isLoadGoData);
+            editor.apply();
 
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "詰碁データの読み込みに失敗しました。", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "詰碁データの読み込みに失敗しました", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -78,7 +83,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        db.close();
+
+        // 保存・停止処理
+        if (db != null) {
+            db.close();
+        }
     }
 
     //ここでデータを受け取って不要な文字を除去する
@@ -87,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GoData goData2 = new GoData();
         int start;
         String allGoData;
-        String[] split = (goDataText.split(",", 0));
 
+        String[] split = (goDataText.split(",", 0));
         for (String data : split) {
             if (data.startsWith("AB::")) {       //ここで黒かどうかを判定
                 start = data.indexOf("AB::");
